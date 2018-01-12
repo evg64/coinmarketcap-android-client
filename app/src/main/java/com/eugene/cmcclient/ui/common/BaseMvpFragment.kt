@@ -1,4 +1,4 @@
-package com.eugene.cmcclient.base
+package com.eugene.cmcclient.ui.common
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.eugene.cmcclient.di.components.ComponentFragment
  * Created by Eugene on 09.12.2017.
  */
 abstract class BaseMvpFragment : Fragment(), MvpView {
-    lateinit var component: ComponentFragment
+    protected lateinit var component: ComponentFragment
 
     override fun showError(msg: String) {
         if (activity != null) {
@@ -31,12 +31,8 @@ abstract class BaseMvpFragment : Fragment(), MvpView {
         component = if (savedInstanceState == null || activity !is ComponentCache) {
             Injector.newComponentFragment()
         } else {
-            val cached = activity.restoreComponent(savedInstanceState)
-            if (cached != null && cached is ComponentFragment) {
-                cached
-            } else {
-                Injector.newComponentFragment()
-            }
+            // if cache returns wrong value or nothing, we become stateless and create new dagger component every onCreate call
+            activity.restoreComponent(savedInstanceState) as? ComponentFragment ?: Injector.newComponentFragment()
         }
     }
 

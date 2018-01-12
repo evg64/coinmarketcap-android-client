@@ -10,9 +10,6 @@ import com.eugene.cmcclient.databinding.TickerBinding
 import com.eugene.cmcclient.ui.model.TickerModel
 import org.jetbrains.anko.layoutInflater
 
-/**
- * Created by Eugene on 12.12.2017.
- */
 class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     val items: MutableList<TickerModel> = mutableListOf()
 

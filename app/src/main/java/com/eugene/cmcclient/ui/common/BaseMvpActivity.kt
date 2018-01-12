@@ -1,4 +1,4 @@
-package com.eugene.cmcclient.base
+package com.eugene.cmcclient.ui.common
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -17,13 +17,8 @@ abstract class BaseMvpActivity : ActivityComponentCache(),
         component = if (savedInstanceState == null) {
             Injector.newComponentActivity()
         } else {
-            // if cache returns nothing, we become stateless and create new dagger component every onCreate call
-            val cached = restoreComponent(savedInstanceState)
-            if (cached != null && cached is ComponentActivity) {
-                cached
-            } else {
-                Injector.newComponentActivity()
-            }
+            // if cache returns wrong value or nothing, we become stateless and create new dagger component every onCreate call
+            restoreComponent(savedInstanceState) as? ComponentActivity ?: Injector.newComponentActivity()
         }
     }
 
@@ -33,6 +28,7 @@ abstract class BaseMvpActivity : ActivityComponentCache(),
             storeComponent(component, outState)
         }
     }
+
     override fun showError(msg: String) {
         AlertDialog.Builder(this).setMessage(msg).show()
     }

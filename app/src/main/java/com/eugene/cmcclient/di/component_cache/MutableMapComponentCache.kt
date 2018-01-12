@@ -3,6 +3,11 @@ package com.eugene.cmcclient.di.component_cache
 import android.os.Bundle
 import com.eugene.cmcclient.di.components.CacheableComponent
 
+/**
+ * Stores components in mutable map. Every client is assigned an id which is put into client's bundle.
+ *
+ * That id enables returning correct component instance from [restoreComponent] provided the same bundle is passed.
+ */
 class MutableMapComponentCache : ComponentCache {
     val components = mutableMapOf<Int, CacheableComponent>()
 

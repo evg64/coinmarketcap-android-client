@@ -1,7 +1,7 @@
 package com.eugene.cmcclient.di.modules
 
 import android.util.Log
-import com.eugene.cmcclient.data.CMCApiService
+import com.eugene.cmcclient.data.Backend
 import com.eugene.cmcclient.di.ScopeApp
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
@@ -18,8 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 @Module
 class ModuleNetwork {
-    @Provides @ScopeApp fun getApiService(retrofit: Retrofit): CMCApiService {
-        return retrofit.create(CMCApiService::class.java)
+    @Provides @ScopeApp fun getApiService(retrofit: Retrofit): Backend {
+        return retrofit.create(Backend::class.java)
     }
 
     @Provides @ScopeApp fun getRetrofit(callAdapterFactory: CallAdapter.Factory, converterFactory: Converter.Factory, client: OkHttpClient): Retrofit {

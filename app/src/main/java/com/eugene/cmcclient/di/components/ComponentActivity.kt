@@ -1,7 +1,6 @@
 package com.eugene.cmcclient.di.components
 
-import android.app.Activity
-import com.eugene.cmcclient.data.repo.TickerRepo
+import com.eugene.cmcclient.data.tickers.repository.RepositoryTickers
 import com.eugene.cmcclient.di.ScopeActivity
 import com.eugene.cmcclient.di.modules.ModuleActivity
 import com.eugene.cmcclient.ui.main.ActivityMain
@@ -14,5 +13,5 @@ import dagger.Component
 @ScopeActivity
 interface ComponentActivity : CacheableComponent {
     fun inject(activity : ActivityMain)
-    fun getTickerRepo() : TickerRepo
+    fun getTickerRepo() : RepositoryTickers
 }

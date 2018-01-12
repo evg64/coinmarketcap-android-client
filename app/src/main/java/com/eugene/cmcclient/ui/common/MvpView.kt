@@ -1,4 +1,4 @@
-package com.eugene.cmcclient.base
+package com.eugene.cmcclient.ui.common
 
 /**
  * Created by Eugene on 07.12.2017.

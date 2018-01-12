@@ -1,4 +1,4 @@
-package com.eugene.cmcclient.base
+package com.eugene.cmcclient.ui.common
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -15,11 +15,10 @@ open class ActivityComponentCache : AppCompatActivity(), ComponentCache {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val instance = lastCustomNonConfigurationInstance
-        internalCache = if (savedInstanceState == null || instance == null || instance !is ComponentCache) {
+        internalCache = if (instance == null || instance !is ComponentCache) {
+            // new cache instance
             Injector.componentApp.getComponentCache()
         } else {
-            // cache is supposed to exist only after config changes, so we must check that saved instance state exists
-            // moreover, if custom non config instance is somehow absent or is of improper type, we will fallback to creating new cache instance
             instance
         }
         super.onCreate(savedInstanceState)

@@ -1,7 +1,7 @@
 package com.eugene.cmcclient.di.components
 
-import com.eugene.cmcclient.data.CMCApiService
-import com.eugene.cmcclient.data.repo.TickerRepo
+import com.eugene.cmcclient.data.Backend
+import com.eugene.cmcclient.data.tickers.repository.RepositoryTickers
 import com.eugene.cmcclient.di.ScopeApp
 import com.eugene.cmcclient.di.component_cache.ComponentCache
 import com.eugene.cmcclient.di.modules.ModuleComponentCache
@@ -15,7 +15,7 @@ import dagger.Component
 @Component(modules = [ModuleNetwork::class, ModuleRepo::class, ModuleComponentCache::class])
 @ScopeApp
 interface ComponentApp {
-    fun getApiService() : CMCApiService
-    fun getTickerRepo() : TickerRepo
+    fun getApiService() : Backend
+    fun getTickerRepo() : RepositoryTickers
     fun getComponentCache() : ComponentCache
 }

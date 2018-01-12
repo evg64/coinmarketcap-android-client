@@ -1,11 +1,12 @@
-package com.eugene.cmcclient.data.repo
+package com.eugene.cmcclient.data.tickers.repository
 
-import com.eugene.cmcclient.data.entities.Ticker
+import com.eugene.cmcclient.data.tickers.Ticker
 import io.reactivex.Observable
 
 /**
  * Created by Eugene on 09.12.2017.
  */
-interface TickerRepo : Repo<Ticker>{
+interface RepositoryTickers {
     fun getTickers(from: Int, limit: Int) : Observable<List<Ticker>>
+    fun reset()
 }

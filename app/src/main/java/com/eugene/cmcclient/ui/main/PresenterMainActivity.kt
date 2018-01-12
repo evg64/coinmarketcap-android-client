@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.ui.main
 
-import com.eugene.cmcclient.base.BaseMvpPresenter
+import com.eugene.cmcclient.ui.common.BaseMvpPresenter
 import javax.inject.Inject
 
 /**

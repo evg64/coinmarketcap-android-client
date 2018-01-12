@@ -1,11 +1,8 @@
 package com.eugene.cmcclient.ui.main
 
-import android.os.Bundle
-import com.eugene.cmcclient.base.MvpLifecycleAwareMvpView
-import com.eugene.cmcclient.base.MvpPresenter
-import com.eugene.cmcclient.base.MvpView
+import com.eugene.cmcclient.ui.common.MvpPresenter
+import com.eugene.cmcclient.ui.common.MvpView
 import com.eugene.cmcclient.ui.model.TickerModel
-import com.jakewharton.rxbinding2.support.v7.widget.RecyclerViewScrollEvent
 import io.reactivex.Observable
 
 /**
@@ -17,13 +14,13 @@ class MvpActivityMain {
 }
 
 class MvpTickerList {
-    interface View : MvpLifecycleAwareMvpView {
+    interface View : MvpView {
         fun showMoreTickers(t: List<TickerModel>)
         fun getItemCountBelowLastVisibleItem(): Int
-        fun getScrollEvents(): Observable<RecyclerViewScrollEvent>
         fun getItemCount(): Int
-        fun getFirstVisibleItem(): Int
-        fun scrollTo(itemPosition: Int)
+        fun getItemsBelowScreenEvents(): Observable<Int>
+        fun getPullToRefreshEvents(): Observable<Any>
+        fun resetTickers()
     }
 
     interface Presenter : MvpPresenter<View> {
