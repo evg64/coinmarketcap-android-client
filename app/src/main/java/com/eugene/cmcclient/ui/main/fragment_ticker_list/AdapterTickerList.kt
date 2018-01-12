@@ -66,10 +66,12 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
 
     var showLoadingView = false
         set(value) {
-            if (value) {
-                notifyItemInserted(itemCount - 1)
-            } else {
-                notifyItemChanged(itemCount - 1)
+            if (value != field) {
+                if (value) {
+                    notifyItemInserted(itemCount - 1)
+                } else {
+                    notifyItemChanged(itemCount - 1)
+                }
             }
             field = value
         }

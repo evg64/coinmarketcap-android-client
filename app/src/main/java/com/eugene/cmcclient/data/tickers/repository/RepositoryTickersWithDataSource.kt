@@ -14,7 +14,7 @@ open class RepositoryTickersWithDataSource(private val source: DataSourceTickers
     }
 
     override fun getTickers(from: Int, limit: Int): Observable<List<Ticker>> {
-        return source.getTickers(from, limit).retry(2)
+        return source.getTickers(from, limit)
     }
 
 }

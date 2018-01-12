@@ -30,11 +30,9 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     }
 
     override fun showLoading() {
-        if (adapter.itemCount == 0) {
-            pullToRefresh.isRefreshing = true
-        } else {
-            adapter.showLoadingView = true
-        }
+        val hasItems = adapter.itemCount > 0
+        adapter.showLoadingView = hasItems
+        pullToRefresh.isRefreshing = !hasItems
     }
 
     override fun hideLoading() {
@@ -74,10 +72,9 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     }
 
     //    TO DO
-    // do not cancel http request on rotation
-    //    can we implement UseCaseErrorHandler + default presenter-wide error handler?
+    // make normal layout for tickers
+    // add refresh to action bar
     // different layout for portrait and landscape
-    // consider presenter.onErrorMessageConsumed(errMsgId: Int)
     // handle permissions on >=marshmallow
 
     //    TO CHECK
@@ -99,14 +96,10 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     }
 
     override fun onDestroyView() {
+        presenter.detach(this)
         // we must remove adapter otherwise activity leaks (since adapter survives config changes)
         rv.adapter = null
         super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        presenter.detach(this)
-        super.onDestroy()
     }
 
 }

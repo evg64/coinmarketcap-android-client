@@ -35,9 +35,9 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
     }
 
     private fun onPullToRefresh(unused: Any) {
-        tickerRepo.reset()
         disposableLoadTickers?.dispose()
         disposableLoadTickers = null
+        tickerRepo.reset()
         view?.let {
             it.resetTickers()
             it.hideLoading()
@@ -47,6 +47,7 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
 
     override fun detach(view: MvpTickerList.View) {
         if (view == this.view) {
+            view.hideLoading()
             disposableScroll = null
             disposableLoadTickers = null
         }
@@ -101,7 +102,7 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
         }
         disposableLoadTickers = tickerRepo.getTickers(from, itemCount)
                         .map { it: List<Ticker> -> TickerModel.from(it) }
-                        .subscribeOn(Schedulers.io())
+                        .subscribeOn(Schedulers.computation()) // network operations - io, converting operations - computation
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(onNext, onError)
         compositeDisposable?.add(disposableLoadTickers!!)

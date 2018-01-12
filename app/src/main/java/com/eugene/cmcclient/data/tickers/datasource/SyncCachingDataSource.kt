@@ -1,7 +1,7 @@
 package com.eugene.cmcclient.data.tickers.datasource
 
 import com.eugene.cmcclient.data.tickers.Ticker
-import com.eugene.cmcclient.data.tickers.cache.InMemoryCacheTickers
+import com.eugene.cmcclient.data.tickers.cache.CacheTickers
 import io.reactivex.Observable
 
 /**
@@ -11,9 +11,9 @@ import io.reactivex.Observable
  *
  * Created by Eugene on 10.01.2018.
  */
-class SyncCacheDataSource(
+class SyncCachingDataSource(
         private val source: DataSourceTickers,
-        private val cache: InMemoryCacheTickers
+        private val cache: CacheTickers
 ) : DataSourceTickers {
 
     override fun getTickers(from: Int, limit: Int): Observable<List<Ticker>> {

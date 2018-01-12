@@ -1,5 +1,6 @@
 package com.eugene.cmcclient.data.tickers.datasource
 
+import android.util.Log
 import com.eugene.cmcclient.data.tickers.Ticker
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -19,19 +20,22 @@ class HotDataSource(private val source: DataSourceTickers) : DataSourceTickers {
         val operation = ongoingOperations[key]
         return if (operation == null) {
             val subject: PublishSubject<List<Ticker>> = PublishSubject.create()
+            ongoingOperations[key] = subject
             source.getTickers(from, limit)
                     .doOnDispose({ ongoingOperations.remove(key) })
                     .doOnError({ ongoingOperations.remove(key) })
                     .doOnComplete({ ongoingOperations.remove(key) })
                     .subscribe(subject)
-            ongoingOperations[key] = subject
+            Log.d("DATA", "Returning new subscription for params: $key")
             subject
         } else {
+            Log.d("DATA", "Returning cached subscription for params: $key")
             operation
         }
     }
 
     override fun reset() {
+        Log.d("DATA", "Resetting subscriptions")
         ongoingOperations.forEach({ it.value.onError(InterruptedException("Data source is reset")) })
         ongoingOperations.clear()
         source.reset()
