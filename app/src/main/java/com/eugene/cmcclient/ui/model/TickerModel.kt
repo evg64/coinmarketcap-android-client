@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.ui.model
 
-import com.eugene.cmcclient.data.tickers.TickerFromApi
+import com.eugene.cmcclient.data.tickers.TickerDataModel
 
 /**
  * Created by Eugene on 13.12.2017.
@@ -16,15 +16,15 @@ data class TickerModel(
         val percentChange24h: Float
                       ) {
     companion object {
-        fun from(tickers: List<TickerFromApi>): List<TickerModel> = tickers.map { from(it) }
+        fun from(tickers: List<TickerDataModel>): List<TickerModel> = tickers.map { from(it) }
 
-        fun from(ticker: TickerFromApi) = TickerModel(ticker.rank,
-                                                      ticker.name,
-                                                      ticker.price,
-                                                      ticker.marketCap,
-                                                      ticker.volume24h,
-                                                      ticker.circulatingSupply,
-                                                      ticker.symbol,
-                                                      ticker.percentChange24h)
+        fun from(ticker: TickerDataModel) = TickerModel(ticker.rank,
+                                                        ticker.name,
+                                                        ticker.price,
+                                                        ticker.marketCap,
+                                                        ticker.volume24h,
+                                                        ticker.circulatingSupply,
+                                                        ticker.symbol,
+                                                        ticker.percentChange24h)
     }
 }

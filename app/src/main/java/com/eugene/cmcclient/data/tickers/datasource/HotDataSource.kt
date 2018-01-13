@@ -1,7 +1,7 @@
 package com.eugene.cmcclient.data.tickers.datasource
 
 import android.util.Log
-import com.eugene.cmcclient.data.tickers.TickerFromApi
+import com.eugene.cmcclient.data.tickers.TickerDataModel
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -13,9 +13,9 @@ import io.reactivex.subjects.PublishSubject
 class HotDataSource(private val source: DataSourceTickers) : DataSourceTickers {
     private data class GetTickersParams(val from: Int, val limit: Int)
 
-    private val ongoingOperations: MutableMap<GetTickersParams, PublishSubject<List<TickerFromApi>>> = HashMap()
+    private val ongoingOperations: MutableMap<GetTickersParams, PublishSubject<List<TickerDataModel>>> = HashMap()
 
-    override fun getTickers(from: Int, limit: Int): Observable<List<TickerFromApi>> {
+    override fun getTickers(from: Int, limit: Int): Observable<List<TickerDataModel>> {
         val key = GetTickersParams(from, limit)
         val operation = ongoingOperations[key]
         return if (operation == null) {
@@ -28,8 +28,8 @@ class HotDataSource(private val source: DataSourceTickers) : DataSourceTickers {
         }
     }
 
-    private fun startNewGetTickersOperation(key: GetTickersParams): PublishSubject<List<TickerFromApi>> {
-        val subject: PublishSubject<List<TickerFromApi>> = PublishSubject.create()
+    private fun startNewGetTickersOperation(key: GetTickersParams): PublishSubject<List<TickerDataModel>> {
+        val subject: PublishSubject<List<TickerDataModel>> = PublishSubject.create()
         ongoingOperations[key] = subject
         source.getTickers(key.from, key.limit)
                 .doOnDispose({ ongoingOperations.remove(key) })

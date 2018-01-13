@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.data.tickers.datasource
 
-import com.eugene.cmcclient.data.tickers.TickerFromApi
+import com.eugene.cmcclient.data.tickers.TickerDataModel
 import com.eugene.cmcclient.data.tickers.cache.CacheTickers
 import io.reactivex.Observable
 
@@ -16,7 +16,7 @@ class SyncCachingDataSource(
         private val cache: CacheTickers
 ) : DataSourceTickers {
 
-    override fun getTickers(from: Int, limit: Int): Observable<List<TickerFromApi>> {
+    override fun getTickers(from: Int, limit: Int): Observable<List<TickerDataModel>> {
         val cached = cache.get(from, limit)
         return if (cached != null)
             Observable.just(cached)

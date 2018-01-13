@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.data.tickers.cache
 
-import com.eugene.cmcclient.data.tickers.TickerFromApi
+import com.eugene.cmcclient.data.tickers.TickerDataModel
 
 /**
  * Created by Eugene on 09.01.2018.
@@ -10,13 +10,13 @@ class InMemoryCacheTickers : CacheTickers {
         cache.clear()
     }
 
-    private val cache: MutableList<TickerFromApi> = ArrayList()
+    private val cache: MutableList<TickerDataModel> = ArrayList()
 
     override fun isExpired(): Boolean {
         return false
     }
 
-    override fun put(ticker: TickerFromApi, atIndex: Int) {
+    override fun put(ticker: TickerDataModel, atIndex: Int) {
         val size = cache.size
         if (atIndex > size) {
             throw IllegalArgumentException("Cache size is ${cache.size}, cannot add elements at $atIndex")
@@ -28,7 +28,7 @@ class InMemoryCacheTickers : CacheTickers {
         }
     }
 
-    override fun put(tickers: List<TickerFromApi>, atIndex: Int) {
+    override fun put(tickers: List<TickerDataModel>, atIndex: Int) {
         if (atIndex == cache.size) {
             cache.addAll(tickers)
         } else {
@@ -36,7 +36,7 @@ class InMemoryCacheTickers : CacheTickers {
         }
     }
 
-    override fun get(from: Int, count: Int): List<TickerFromApi>? {
+    override fun get(from: Int, count: Int): List<TickerDataModel>? {
         return if (cache.size < from + count) {
             null
         } else {
