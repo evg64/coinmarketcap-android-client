@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.data.tickers.repository
 
-import com.eugene.cmcclient.data.tickers.Ticker
+import com.eugene.cmcclient.data.tickers.TickerFromApi
 import com.eugene.cmcclient.data.tickers.datasource.DataSourceTickers
 import io.reactivex.Observable
 
@@ -13,7 +13,7 @@ open class RepositoryTickersWithDataSource(private val source: DataSourceTickers
         source.reset()
     }
 
-    override fun getTickers(from: Int, limit: Int): Observable<List<Ticker>> {
+    override fun getTickers(from: Int, limit: Int): Observable<List<TickerFromApi>> {
         return source.getTickers(from, limit)
     }
 

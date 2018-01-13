@@ -2,7 +2,7 @@ package com.eugene.cmcclient.ui.main.fragment_ticker_list
 
 import android.util.Log
 import com.eugene.cmcclient.R
-import com.eugene.cmcclient.data.tickers.Ticker
+import com.eugene.cmcclient.data.tickers.TickerFromApi
 import com.eugene.cmcclient.data.tickers.repository.RepositoryTickers
 import com.eugene.cmcclient.di.ScopeFragment
 import com.eugene.cmcclient.ui.UIConstants
@@ -101,7 +101,7 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
             view?.showError(R.string.failed_to_load_tickers)
         }
         disposableLoadTickers = tickerRepo.getTickers(from, itemCount)
-                        .map { it: List<Ticker> -> TickerModel.from(it) }
+                        .map { it: List<TickerFromApi> -> TickerModel.from(it) }
                         .subscribeOn(Schedulers.computation()) // network operations - io, converting operations - computation
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(onNext, onError)

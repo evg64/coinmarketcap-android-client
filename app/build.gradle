@@ -95,4 +95,7 @@ dependencies {
 
     // anko
     implementation "org.jetbrains.anko:anko:0.10.3"
+
+    // css3 parser
+    implementation "com.helger:ph-css:6.0.0"
 }
