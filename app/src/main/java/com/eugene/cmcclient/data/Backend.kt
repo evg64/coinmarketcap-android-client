@@ -2,6 +2,7 @@ package com.eugene.cmcclient.data
 
 import com.eugene.cmcclient.data.tickers.TickerFromApi
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,5 +14,5 @@ interface Backend {
     fun getTickers(
             @Query("start") start: Int,
             @Query("limit") limit: Int
-    ): Observable<List<TickerFromApi>>
+    ): Single<List<TickerFromApi>>
 }
