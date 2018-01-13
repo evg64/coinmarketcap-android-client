@@ -8,7 +8,7 @@ import com.eugene.cmcclient.di.ScopeFragment
 import com.eugene.cmcclient.ui.UIConstants
 import com.eugene.cmcclient.ui.common.BaseMvpPresenter
 import com.eugene.cmcclient.ui.main.MvpTickerList
-import com.eugene.cmcclient.ui.model.TickerModel
+import com.eugene.cmcclient.ui.model.TickerUIModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -81,7 +81,7 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
             view?.showLoading()
             unsubscribeFromScroll()
         }
-        val onNext: (List<TickerModel>) -> Unit = { list: List<TickerModel> ->
+        val onNext: (List<TickerUIModel>) -> Unit = { list: List<TickerUIModel> ->
             view?.let {
                 it.showMoreTickers(list)
                 if (needsMoreTickers(it.getItemCountBelowLastVisibleItem())) {
@@ -101,7 +101,7 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
             view?.showError(R.string.failed_to_load_tickers)
         }
         disposableLoadTickers = tickerRepo.getTickers(from, itemCount)
-                        .map { it: List<TickerDataModel> -> TickerModel.from(it) }
+                        .map { it: List<TickerDataModel> -> TickerUIModel.from(it) }
                         .subscribeOn(Schedulers.computation()) // network operations - io, converting operations - computation
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(onNext, onError)

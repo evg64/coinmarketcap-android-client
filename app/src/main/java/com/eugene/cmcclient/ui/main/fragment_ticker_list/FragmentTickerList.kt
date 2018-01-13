@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.ui.common.BaseMvpFragment
 import com.eugene.cmcclient.ui.main.MvpTickerList
-import com.eugene.cmcclient.ui.model.TickerModel
+import com.eugene.cmcclient.ui.model.TickerUIModel
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView
 import io.reactivex.Observable
@@ -51,7 +51,7 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
 
     override fun getItemCountBelowLastVisibleItem() = adapter.itemCount - layoutManager.findLastVisibleItemPosition()
 
-    override fun showMoreTickers(t: List<TickerModel>) {
+    override fun showMoreTickers(t: List<TickerUIModel>) {
         val oldSize = adapter.items.size
         adapter.items.addAll(t)
         adapter.notifyItemRangeChanged(oldSize, adapter.itemCount - oldSize)

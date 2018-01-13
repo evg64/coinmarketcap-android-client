@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.databinding.TickerBinding
-import com.eugene.cmcclient.ui.model.TickerModel
+import com.eugene.cmcclient.ui.model.TickerUIModel
 import org.jetbrains.anko.layoutInflater
 
 class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
-    val items: MutableList<TickerModel> = mutableListOf()
+    val items: MutableList<TickerUIModel> = mutableListOf()
 
     object ViewTypes {
         const val TICKER = 0

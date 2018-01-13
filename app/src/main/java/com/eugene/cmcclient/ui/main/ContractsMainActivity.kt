@@ -2,7 +2,7 @@ package com.eugene.cmcclient.ui.main
 
 import com.eugene.cmcclient.ui.common.MvpPresenter
 import com.eugene.cmcclient.ui.common.MvpView
-import com.eugene.cmcclient.ui.model.TickerModel
+import com.eugene.cmcclient.ui.model.TickerUIModel
 import io.reactivex.Observable
 
 /**
@@ -15,7 +15,7 @@ class MvpActivityMain {
 
 class MvpTickerList {
     interface View : MvpView {
-        fun showMoreTickers(t: List<TickerModel>)
+        fun showMoreTickers(t: List<TickerUIModel>)
         fun getItemCountBelowLastVisibleItem(): Int
         fun getItemCount(): Int
         fun getItemsBelowScreenEvents(): Observable<Int>

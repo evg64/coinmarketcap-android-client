@@ -6,7 +6,7 @@
     <data>
         <variable
             name="ticker"
-            type="com.eugene.cmcclient.ui.model.TickerModel"/>
+            type="com.eugene.cmcclient.ui.model.TickerUIModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
