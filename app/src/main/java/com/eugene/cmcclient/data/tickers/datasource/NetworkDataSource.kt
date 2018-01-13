@@ -14,6 +14,7 @@ class NetworkDataSource(private val backend: Backend) : DataSourceTickers {
     override fun getTickers(from: Int, limit: Int): Observable<List<TickerFromApi>> {
         return backend.getTickers(from, limit)
                 .retry(2)
+                .toObservable()
                 .subscribeOn(Schedulers.io())
     }
 
