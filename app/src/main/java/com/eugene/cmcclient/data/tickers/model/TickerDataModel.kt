@@ -1,4 +1,4 @@
-package com.eugene.cmcclient.data.tickers
+package com.eugene.cmcclient.data.tickers.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,6 +1,8 @@
 package com.eugene.cmcclient.di
 
+import android.content.Context
 import com.eugene.cmcclient.di.components.*
+import com.eugene.cmcclient.di.modules.ModuleContext
 import com.eugene.cmcclient.di.modules.ModuleFragment
 
 /**
@@ -8,7 +10,11 @@ import com.eugene.cmcclient.di.modules.ModuleFragment
  */
 object Injector {
     @Suppress("MemberVisibilityCanPrivate")
-    val componentApp: ComponentApp by lazy { DaggerComponentApp.builder().build() }
+    lateinit var componentApp: ComponentApp
+
+    fun initComponentApp(context: Context) {
+        componentApp = DaggerComponentApp.builder().moduleContext(ModuleContext(context.applicationContext)).build()
+    }
 
     fun newComponentActivity(): ComponentActivity {
         return DaggerComponentActivity.builder()

@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.data.tickers.datasource
 
-import com.eugene.cmcclient.data.tickers.TickerDataModel
+import com.eugene.cmcclient.data.tickers.model.TickerDataModel
 import io.reactivex.Observable
 
 /**

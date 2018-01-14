@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.data
 
-import com.eugene.cmcclient.data.tickers.TickerDataModel
+import com.eugene.cmcclient.data.tickers.model.TickerDataModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

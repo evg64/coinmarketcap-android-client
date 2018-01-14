@@ -9,6 +9,10 @@ import com.eugene.cmcclient.R
 import com.eugene.cmcclient.databinding.TickerBinding
 import com.eugene.cmcclient.ui.model.TickerUIModel
 import org.jetbrains.anko.layoutInflater
+import android.graphics.Bitmap
+import android.databinding.BindingAdapter
+import android.widget.ImageView
+
 
 class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     val items: MutableList<TickerUIModel> = mutableListOf()
@@ -20,6 +24,13 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
         holder?.onBind(position)
+    }
+
+    companion object {
+        @BindingAdapter("bind:imageBitmap")
+        fun loadImage(iv: ImageView, bitmap: Bitmap) {
+            iv.setImageBitmap(bitmap)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): Holder {

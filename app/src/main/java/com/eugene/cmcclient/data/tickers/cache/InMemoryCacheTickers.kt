@@ -1,6 +1,6 @@
 package com.eugene.cmcclient.data.tickers.cache
 
-import com.eugene.cmcclient.data.tickers.TickerDataModel
+import com.eugene.cmcclient.data.tickers.model.TickerDataModel
 
 /**
  * Created by Eugene on 09.01.2018.

@@ -72,10 +72,12 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     }
 
     //    TO DO
+    // make logo access for tickers
     // make normal layout for tickers
     // add refresh to action bar
     // different layout for portrait and landscape
     // handle permissions on >=marshmallow
+    // refactor repository logo - move out code to datasources
 
     //    TO CHECK
 
