@@ -1,16 +1,14 @@
 package com.eugene.cmcclient.data.tickers.repository
 
 import android.graphics.Bitmap
-import android.util.Log
 import com.eugene.cmcclient.data.logo.repository.RepositoryLogo
 import com.eugene.cmcclient.data.tickers.adapter.AdapterTickerApiToDomainModel
 import com.eugene.cmcclient.data.tickers.datasource.DataSourceTickers
-import com.eugene.cmcclient.data.tickers.model.Name
+import com.eugene.cmcclient.data.tickers.model.StringId
 import com.eugene.cmcclient.data.tickers.model.Ticker
 import com.eugene.cmcclient.data.tickers.model.TickerDataModel
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
-import java.net.URI
 
 /**
  * Created by Eugene on 09.12.2017.
@@ -38,7 +36,7 @@ open class RepositoryTickersWithDataSource(
                 repositoryLogo.getLogoMap(),
                 source.getTickers(from, limit),
 //                Observable.just(mapOf<Name, URI>()),
-                BiFunction { logos: Map<Name, Bitmap>, tickers: List<TickerDataModel> ->
+                BiFunction { logos: Map<StringId, Bitmap>, tickers: List<TickerDataModel> ->
                     adapter.transform(tickers, logos)
                 })
         return combineLatest

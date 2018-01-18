@@ -28,8 +28,10 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
 
     companion object {
         @BindingAdapter("bind:imageBitmap")
-        fun loadImage(iv: ImageView, bitmap: Bitmap) {
-            iv.setImageBitmap(bitmap)
+        fun loadImage(iv: ImageView, bitmap: Bitmap?) {
+            if (bitmap != null) {
+                iv.setImageBitmap(bitmap)
+            }
         }
     }
 

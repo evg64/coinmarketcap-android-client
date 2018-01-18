@@ -14,6 +14,9 @@ import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_ticker_list.*
 import javax.inject.Inject
+import android.support.v7.widget.DividerItemDecoration
+
+
 
 class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
 
@@ -89,6 +92,8 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
         super.onActivityCreated(savedInstanceState)
         rv.layoutManager = layoutManager
         rv.adapter = adapter
+
+        rv.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
 
         itemsBelowScreenObservable = RxRecyclerView.scrollEvents(rv)
                 .map { getItemCountBelowLastVisibleItem() }

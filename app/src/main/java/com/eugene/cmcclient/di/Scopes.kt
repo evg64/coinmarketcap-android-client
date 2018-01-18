@@ -1,5 +1,6 @@
 package com.eugene.cmcclient.di
 
+import javax.inject.Qualifier
 import javax.inject.Scope
 
 /**
@@ -16,3 +17,11 @@ annotation class ScopeActivity
 @Scope
 @Retention(value = AnnotationRetention.RUNTIME)
 annotation class ScopeFragment
+
+@Qualifier
+@Retention(value = AnnotationRetention.RUNTIME)
+annotation class AppContext
+
+@Qualifier
+@Retention(value = AnnotationRetention.RUNTIME)
+annotation class FilesRoot

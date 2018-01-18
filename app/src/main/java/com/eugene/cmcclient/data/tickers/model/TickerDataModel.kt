@@ -13,5 +13,7 @@ data class TickerDataModel(@SerializedName("id") val id: String,
                            @SerializedName("market_cap_usd") val marketCap: Double,
                            @SerializedName("24h_volume_usd") val volume24h: Double,
                            @SerializedName("available_supply") val circulatingSupply: Double,
-                           @SerializedName("percent_change_24h") val percentChange24h: Float
+                           @SerializedName("percent_change_1h") val percentChange1h: Float,
+                           @SerializedName("percent_change_24h") val percentChange24h: Float,
+                           @SerializedName("percent_change_7d") val percentChange7d: Float
                  )

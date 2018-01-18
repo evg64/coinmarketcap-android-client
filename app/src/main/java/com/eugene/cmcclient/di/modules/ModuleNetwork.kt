@@ -5,6 +5,7 @@ import android.util.Log
 import com.eugene.cmcclient.data.Backend
 import com.eugene.cmcclient.data.BackendLogoCSS
 import com.eugene.cmcclient.data.DataConstants
+import com.eugene.cmcclient.di.AppContext
 import com.eugene.cmcclient.di.ScopeApp
 import com.jakewharton.picasso.OkHttp3Downloader
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -65,7 +66,7 @@ class ModuleNetwork {
     @Provides @ScopeApp fun provideConverterFactory(): Converter.Factory = GsonConverterFactory.create()
     @Provides @ScopeApp fun provideCallAdapterFactory(): CallAdapter.Factory = RxJava2CallAdapterFactory.create()
 
-    @Provides @ScopeApp fun providePicasso(@Named("AppContext") context: Context): Picasso {
+    @Provides @ScopeApp fun providePicasso(@AppContext context: Context): Picasso {
         return Picasso.Builder(context).downloader(OkHttp3Downloader(context)).build()
     }
 }

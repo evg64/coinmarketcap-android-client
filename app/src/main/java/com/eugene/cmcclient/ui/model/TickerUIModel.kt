@@ -1,10 +1,6 @@
 package com.eugene.cmcclient.ui.model
 
-import android.databinding.Bindable
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import com.eugene.cmcclient.App
 import com.eugene.cmcclient.data.tickers.model.Ticker
 
 
@@ -19,7 +15,9 @@ data class TickerUIModel(
         val volume24h: Double,
         val circulatingSupply: Double,
         val symbol: String,
+        val percentChange1h: Float,
         val percentChange24h: Float,
+        val percentChange7d: Float,
         val logo: Bitmap?
 ) {
     companion object {
@@ -32,7 +30,9 @@ data class TickerUIModel(
                                                  ticker.volume24h.value,
                                                  ticker.circulatingSupply,
                                                  ticker.symbol.name,
+                                                 ticker.percentChange1h,
                                                  ticker.percentChange24h,
+                                                 ticker.percentChange7d,
                                                  ticker.logo)
     }
 }

@@ -3,7 +3,7 @@ package com.eugene.cmcclient.di.modules
 import com.eugene.cmcclient.data.Backend
 import com.eugene.cmcclient.data.BackendLogoCSS
 import com.eugene.cmcclient.data.logo.repository.RepositoryLogo
-import com.eugene.cmcclient.data.logo.repository.RepositoryLogoSingleImage
+import com.eugene.cmcclient.data.logo.repository.RepositoryLogoSprites
 import com.eugene.cmcclient.data.tickers.adapter.AdapterTickerApiToDomainModel
 import com.eugene.cmcclient.data.tickers.cache.CacheTickers
 import com.eugene.cmcclient.data.tickers.cache.InMemoryCacheTickers
@@ -38,7 +38,7 @@ class ModuleRepo {
         return source
     }
 
-    @ScopeApp @Provides fun provideRepositoryLogo(backend: BackendLogoCSS, picasso: Picasso): RepositoryLogo = RepositoryLogoSingleImage(backend, picasso)
+    @ScopeApp @Provides fun provideRepositoryLogo(backend: BackendLogoCSS, picasso: Picasso): RepositoryLogo = RepositoryLogoSprites(backend, picasso)
 
     @ScopeApp @Provides fun provideAdapterTickerApiToDomain()
             : AdapterTickerApiToDomainModel = AdapterTickerApiToDomainModel()
