@@ -8,7 +8,7 @@ import retrofit2.http.Query
 /**
  * Created by Eugene on 07.12.2017.
  */
-interface Backend {
+interface BackendMain {
     @GET(value = "ticker")
     fun getTickers(
             @Query("start") start: Int,

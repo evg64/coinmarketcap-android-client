@@ -1,9 +1,10 @@
-package com.eugene.cmcclient.ui.common
+package com.eugene.cmcclient.ui.common.mvp
 
 import android.app.AlertDialog
 import android.os.Bundle
 import com.eugene.cmcclient.di.Injector
 import com.eugene.cmcclient.di.components.ComponentActivity
+import com.eugene.cmcclient.ui.common.ActivityComponentCache
 
 /**
  * Created by Eugene on 07.12.2017.

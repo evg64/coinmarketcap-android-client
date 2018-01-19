@@ -1,16 +1,16 @@
 package com.eugene.cmcclient.di.modules
 
-import com.eugene.cmcclient.data.Backend
 import com.eugene.cmcclient.data.BackendLogoCSS
+import com.eugene.cmcclient.data.BackendMain
 import com.eugene.cmcclient.data.logo.repository.RepositoryLogo
 import com.eugene.cmcclient.data.logo.repository.RepositoryLogoSprites
-import com.eugene.cmcclient.data.tickers.adapter.AdapterTickerApiToDomainModel
+import com.eugene.cmcclient.data.tickers.adapter.MapperTickerApiToDomain
 import com.eugene.cmcclient.data.tickers.cache.CacheTickers
 import com.eugene.cmcclient.data.tickers.cache.InMemoryCacheTickers
 import com.eugene.cmcclient.data.tickers.datasource.DataSourceTickers
-import com.eugene.cmcclient.data.tickers.datasource.SyncCachingDataSource
-import com.eugene.cmcclient.data.tickers.datasource.NetworkDataSource
 import com.eugene.cmcclient.data.tickers.datasource.HotDataSource
+import com.eugene.cmcclient.data.tickers.datasource.NetworkDataSource
+import com.eugene.cmcclient.data.tickers.datasource.SyncCachingDataSource
 import com.eugene.cmcclient.data.tickers.repository.RepositoryTickers
 import com.eugene.cmcclient.data.tickers.repository.RepositoryTickersWithDataSource
 import com.eugene.cmcclient.di.ScopeApp
@@ -26,10 +26,10 @@ class ModuleRepo {
     @ScopeApp @Provides fun provideTickerRepo(
             dataSource: DataSourceTickers,
             repositoryLogo: RepositoryLogo,
-            adapter: AdapterTickerApiToDomainModel
+            adapter: MapperTickerApiToDomain
     ): RepositoryTickers = RepositoryTickersWithDataSource(dataSource, repositoryLogo, adapter)
 
-    @ScopeApp @Provides fun provideDataSource(backend: Backend, cache: CacheTickers)
+    @ScopeApp @Provides fun provideDataSource(backend: BackendMain, cache: CacheTickers)
             : DataSourceTickers {
         var source: DataSourceTickers
         source = NetworkDataSource(backend)
@@ -41,7 +41,7 @@ class ModuleRepo {
     @ScopeApp @Provides fun provideRepositoryLogo(backend: BackendLogoCSS, picasso: Picasso): RepositoryLogo = RepositoryLogoSprites(backend, picasso)
 
     @ScopeApp @Provides fun provideAdapterTickerApiToDomain()
-            : AdapterTickerApiToDomainModel = AdapterTickerApiToDomainModel()
+            : MapperTickerApiToDomain = MapperTickerApiToDomain()
 
     @ScopeApp @Provides fun provideInMemoryCacheTickers(): CacheTickers = InMemoryCacheTickers()
 }

@@ -2,8 +2,8 @@ package com.eugene.cmcclient.di.modules
 
 import android.content.Context
 import android.util.Log
-import com.eugene.cmcclient.data.Backend
 import com.eugene.cmcclient.data.BackendLogoCSS
+import com.eugene.cmcclient.data.BackendMain
 import com.eugene.cmcclient.data.DataConstants
 import com.eugene.cmcclient.di.AppContext
 import com.eugene.cmcclient.di.ScopeApp
@@ -25,8 +25,8 @@ import javax.inject.Named
  */
 @Module(includes = [ModuleContext::class])
 class ModuleNetwork {
-    @Provides @ScopeApp fun provideBackend(@Named("MainBackend") retrofit: Retrofit): Backend {
-        return retrofit.create(Backend::class.java)
+    @Provides @ScopeApp fun provideBackend(@Named("MainBackend") retrofit: Retrofit): BackendMain {
+        return retrofit.create(BackendMain::class.java)
     }
 
     @Provides @ScopeApp fun provideBackendCSS(@Named("LogosBackend") retrofit: Retrofit): BackendLogoCSS {

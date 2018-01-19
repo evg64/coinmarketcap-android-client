@@ -1,7 +1,7 @@
 package com.eugene.cmcclient.ui.main
 
-import com.eugene.cmcclient.ui.common.MvpPresenter
-import com.eugene.cmcclient.ui.common.MvpView
+import com.eugene.cmcclient.ui.common.mvp.MvpPresenter
+import com.eugene.cmcclient.ui.common.mvp.MvpView
 import com.eugene.cmcclient.ui.model.TickerUIModel
 import io.reactivex.Observable
 

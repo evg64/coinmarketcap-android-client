@@ -6,7 +6,8 @@ import com.eugene.cmcclient.data.tickers.model.Ticker
 import com.eugene.cmcclient.data.tickers.repository.RepositoryTickers
 import com.eugene.cmcclient.di.ScopeFragment
 import com.eugene.cmcclient.ui.UIConstants
-import com.eugene.cmcclient.ui.common.BaseMvpPresenter
+import com.eugene.cmcclient.ui.common.mapper.MapperTickerUI
+import com.eugene.cmcclient.ui.common.mvp.BaseMvpPresenter
 import com.eugene.cmcclient.ui.main.MvpTickerList
 import com.eugene.cmcclient.ui.model.TickerUIModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,15 +24,6 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
     private var disposableLoadTickers: Disposable? = null
 
     override fun onActivityCreated() {
-        view?.let {
-            when {
-                needsMoreTickers(it.getItemCountBelowLastVisibleItem()) ->
-                    loadTickers(it.getItemCount(), true, UIConstants.PAGE_SIZE)
-                else -> subscribeOnScroll()
-            }
-            val subscription = it.getPullToRefreshEvents().subscribe(this::onPullToRefresh)
-            compositeDisposable?.add(subscription)
-        }
     }
 
     private fun onPullToRefresh(unused: Any) {
@@ -42,6 +34,19 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
             it.resetTickers()
             it.hideLoading()
             loadTickers(0, true, UIConstants.PAGE_SIZE)
+        }
+    }
+
+    override fun attach(view: MvpTickerList.View) {
+        super.attach(view)
+        view?.let {
+            when {
+                needsMoreTickers(it.getItemCountBelowLastVisibleItem()) ->
+                    loadTickers(it.getItemCount(), true, UIConstants.PAGE_SIZE)
+                else -> subscribeOnScroll()
+            }
+            val subscription = it.getPullToRefreshEvents().subscribe(this::onPullToRefresh)
+            compositeDisposable?.add(subscription)
         }
     }
 
@@ -100,8 +105,9 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
             subscribeOnScroll()
             view?.showError(R.string.failed_to_load_tickers)
         }
+        val mapper = MapperTickerUI()
         disposableLoadTickers = tickerRepo.getTickers(from, itemCount)
-                        .map { it: List<Ticker> -> TickerUIModel.from(it) }
+                        .map { it: List<Ticker> -> mapper.map(it) }
                         .subscribeOn(Schedulers.computation()) // network operations - io, converting operations - computation
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(onNext, onError)

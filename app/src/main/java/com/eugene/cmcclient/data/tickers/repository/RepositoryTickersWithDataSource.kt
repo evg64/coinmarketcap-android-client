@@ -2,7 +2,7 @@ package com.eugene.cmcclient.data.tickers.repository
 
 import android.graphics.Bitmap
 import com.eugene.cmcclient.data.logo.repository.RepositoryLogo
-import com.eugene.cmcclient.data.tickers.adapter.AdapterTickerApiToDomainModel
+import com.eugene.cmcclient.data.tickers.adapter.MapperTickerApiToDomain
 import com.eugene.cmcclient.data.tickers.datasource.DataSourceTickers
 import com.eugene.cmcclient.data.tickers.model.StringId
 import com.eugene.cmcclient.data.tickers.model.Ticker
@@ -16,7 +16,7 @@ import io.reactivex.functions.BiFunction
 open class RepositoryTickersWithDataSource(
         private val source: DataSourceTickers,
         private val repositoryLogo: RepositoryLogo,
-        private val adapter: AdapterTickerApiToDomainModel
+        private val adapter: MapperTickerApiToDomain
 ) : RepositoryTickers {
 
     override fun reset() {

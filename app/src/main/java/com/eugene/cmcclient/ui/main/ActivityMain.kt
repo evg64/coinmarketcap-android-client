@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.eugene.cmcclient.R
-import com.eugene.cmcclient.ui.common.BaseMvpActivity
+import com.eugene.cmcclient.ui.common.mvp.BaseMvpActivity
 import com.eugene.cmcclient.ui.main.fragment_ticker_list.FragmentTickerList
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject

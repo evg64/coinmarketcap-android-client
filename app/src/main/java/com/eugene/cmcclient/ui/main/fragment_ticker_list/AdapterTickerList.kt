@@ -23,7 +23,11 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
-        holder?.onBind(position)
+        val start = System.nanoTime()
+        //holder?.onBind(position)
+        val p = System.nanoTime()
+        val passed = (p.toDouble() - start.toDouble()) / 1000.0
+        Log.d("Bind", "position $position, time $passed microseconds")
     }
 
     companion object {

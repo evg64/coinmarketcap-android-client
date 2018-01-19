@@ -14,4 +14,6 @@ class ModuleContext constructor (context: Context) {
     private val context = context.applicationContext
 
     @Provides @ScopeApp @AppContext fun provideAppContext(): Context = context
+
+    @Provides @ScopeApp fun provideResources(@AppContext context: Context) = context.resources
 }

@@ -1,4 +1,4 @@
-package com.eugene.cmcclient.ui.common
+package com.eugene.cmcclient.ui.common.mvp
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -10,7 +10,8 @@ import com.eugene.cmcclient.di.components.ComponentFragment
 /**
  * Created by Eugene on 09.12.2017.
  */
-abstract class BaseMvpFragment : Fragment(), MvpView {
+abstract class BaseMvpFragment : Fragment(),
+                                 MvpView {
     protected lateinit var component: ComponentFragment
 
     override fun showError(msg: String) {

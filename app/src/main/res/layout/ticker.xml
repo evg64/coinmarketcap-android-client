@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -18,22 +19,24 @@
             android:id="@+id/iv_logo"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:imageBitmap="@{ticker.logo}"
             android:scaleType="centerInside"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_rank"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_launcher"/>
 
         <TextView
             android:id="@+id/tv_symbol"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@{ticker.name, default = DASH}"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
+            app:layout_constraintEnd_toStartOf="@+id/tvPrice"
             app:layout_constraintStart_toEndOf="@+id/iv_logo"
             app:layout_constraintTop_toTopOf="@+id/iv_logo"/>
 
@@ -43,17 +46,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text='@{String.valueOf(ticker.percentChange1h), default = "1% 1h"}'
+            android:textSize="@dimen/percentChangeTextSize"
+            android:textColor="@{ticker.percentChange1hTextColor}"
+            android:text='@{ticker.percentChange1h, default = "1% 1h"}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_logo"/>
 
         <TextView
             android:id="@+id/tv_change_1d"
             android:layout_width="wrap_content"
+            android:textSize="@dimen/percentChangeTextSize"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text='@{String.valueOf(ticker.percentChange24h), default = "3% 1d"}'
+            android:text='@{ticker.percentChange24h, default = "3% 1d"}'
+            android:textColor="@{ticker.percentChange24hTextColor}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_change_1h"/>
 
@@ -63,7 +70,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text='@{String.valueOf(ticker.percentChange7d), default = "12% 1w"}'
+            android:textColor="@{ticker.percentChange7dTextColor}"
+            android:textSize="@dimen/percentChangeTextSize"
+            android:text='@{ticker.percentChange7d, default = "12% 1w"}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_change_1d"/>
 
@@ -71,47 +80,46 @@
             android:id="@+id/tv_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text='@{String.valueOf("Rank " + ticker.rank), default = "Rank 1"}'
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text='@{ticker.rank, default = "1"}'
             android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_symbol"
-            app:layout_constraintEnd_toStartOf="@+id/tvPrice"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tv_market_cap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text='@{String.valueOf(ticker.marketCap + " MC"), default = "65.000.000.000$ MC"}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_change_1h"/>
+            android:text='@{ticker.marketCap, default = "65.000.000.000$ MC"}'
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1h"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/tv_volume_24h"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text='@{String.valueOf(ticker.volume24h), default = "865.000.000$ VOL"}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_market_cap"/>
+            android:text='@{ticker.volume24h, default = "865.000.000$ VOL"}'
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1d"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/tv_circulating_supply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text='@{String.valueOf(ticker.circulatingSupply), default = "21.000.000"}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_volume_24h"/>
+            android:text='@{ticker.circulatingSupply, default = "21.000.000"}'
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1w"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text='@{String.valueOf(ticker.price + "$"), default = "18844$"}'
+            android:text='@{ticker.price, default = "18844$"}'
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_symbol"
             app:layout_constraintEnd_toEndOf="parent"/>

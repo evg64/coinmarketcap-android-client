@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.eugene.cmcclient.R
-import com.eugene.cmcclient.ui.common.BaseMvpFragment
+import com.eugene.cmcclient.ui.common.mvp.BaseMvpFragment
 import com.eugene.cmcclient.ui.main.MvpTickerList
 import com.eugene.cmcclient.ui.model.TickerUIModel
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
@@ -71,18 +71,19 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.inject(this)
-        presenter.attach(this)
     }
 
     //    TO DO
-    // make logo access for tickers
-    // make normal layout for tickers
+    // percent > 0 green < 0 red
+    // bitmaps - receive via api
+
     // add refresh to action bar
     // different layout for portrait and landscape
     // handle permissions on >=marshmallow
-    // refactor repository logo - move out code to datasources
-
     //    TO CHECK
+    // delimiters
+    // remove E10 in market cap
+    // remove $1 $2 in price
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_ticker_list, container, false)
@@ -99,7 +100,8 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
                 .map { getItemCountBelowLastVisibleItem() }
                 .distinctUntilChanged()
         recyclerRefreshObservable = RxSwipeRefreshLayout.refreshes(pullToRefresh)
-        presenter.onActivityCreated()
+        presenter.attach(this)
+//        presenter.onActivityCreated()
     }
 
     override fun onDestroyView() {

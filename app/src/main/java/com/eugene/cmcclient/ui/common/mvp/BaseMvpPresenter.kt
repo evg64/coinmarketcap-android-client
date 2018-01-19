@@ -1,4 +1,4 @@
-package com.eugene.cmcclient.ui.common
+package com.eugene.cmcclient.ui.common.mvp
 
 import io.reactivex.disposables.CompositeDisposable
 
