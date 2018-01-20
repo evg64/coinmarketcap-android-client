@@ -15,7 +15,18 @@ import android.widget.ImageView
 
 
 class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
-    val items: MutableList<TickerUIModel> = mutableListOf()
+    private val items: MutableList<TickerUIModel> = mutableListOf()
+
+    fun addItems(items: List<TickerUIModel>) {
+        this.items.addAll(items)
+    }
+
+    fun clearItems() {
+        items.clear()
+        updateCount()
+    }
+
+    fun getTickerCount() = items.size
 
     object ViewTypes {
         const val TICKER = 0
@@ -60,8 +71,11 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     }
 
     override fun getItemCount(): Int {
-        return items.size + if (showLoadingView) 1 else 0
+        return count
     }
+
+    private var count: Int = 0
+    private fun updateCount() = items.size + if (showLoadingView) 1 else 0
 
     abstract inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun onBind(position: Int)
@@ -91,5 +105,6 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
                 }
             }
             field = value
+            updateCount()
         }
 }

@@ -48,15 +48,16 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     }
 
     override fun resetTickers() {
-        adapter.items.clear()
+        adapter.clearItems()
         adapter.notifyDataSetChanged()
     }
 
     override fun getItemCountBelowLastVisibleItem() = adapter.itemCount - layoutManager.findLastVisibleItemPosition()
 
     override fun showMoreTickers(t: List<TickerUIModel>) {
-        val oldSize = adapter.items.size
-        adapter.items.addAll(t)
+        val oldSize = adapter.getTickerCount()
+//        val oldSize = adapter.items.size
+        adapter.addItems(t)
         adapter.notifyItemRangeChanged(oldSize, adapter.itemCount - oldSize)
     }
 
