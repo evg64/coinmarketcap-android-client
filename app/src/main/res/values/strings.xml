@@ -7,4 +7,5 @@
     <string name="volume">%1$s%2$s VOL</string>
     <string name="price">%1$s%2$s</string>
     <string name="circulating_supply">%1$s coins</string>
+    <string name="refresh">Refresh</string>
 </resources>

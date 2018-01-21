@@ -23,10 +23,7 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
     private var disposableScroll: Disposable? = null
     private var disposableLoadTickers: Disposable? = null
 
-    override fun onActivityCreated() {
-    }
-
-    private fun onPullToRefresh(unused: Any) {
+    private fun refreshWholeListData() {
         disposableLoadTickers?.dispose()
         disposableLoadTickers = null
         tickerRepo.reset()
@@ -37,6 +34,10 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
         }
     }
 
+    override fun onMenuRefreshPressed() {
+        refreshWholeListData()
+    }
+
     override fun attach(view: MvpTickerList.View) {
         super.attach(view)
         view?.let {
@@ -45,7 +46,7 @@ class PresenterTickerList @Inject constructor(private val tickerRepo: Repository
                     loadTickers(it.getItemCount(), true, UIConstants.PAGE_SIZE)
                 else -> subscribeOnScroll()
             }
-            val subscription = it.getPullToRefreshEvents().subscribe(this::onPullToRefresh)
+            val subscription = it.getPullToRefreshEvents().subscribe { this.refreshWholeListData() }
             compositeDisposable?.add(subscription)
         }
     }

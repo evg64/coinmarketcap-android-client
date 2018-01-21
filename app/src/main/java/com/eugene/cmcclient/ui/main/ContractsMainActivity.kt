@@ -24,6 +24,6 @@ class MvpTickerList {
     }
 
     interface Presenter : MvpPresenter<View> {
-        fun onActivityCreated()
+        fun onMenuRefreshPressed()
     }
 }

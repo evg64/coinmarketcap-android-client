@@ -2,9 +2,6 @@ package com.eugene.cmcclient.ui.main.fragment_ticker_list
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.ui.common.mvp.BaseMvpFragment
 import com.eugene.cmcclient.ui.main.MvpTickerList
@@ -15,7 +12,7 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_ticker_list.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
-
+import android.view.*
 
 
 class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
@@ -71,20 +68,34 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         component.inject(this)
     }
 
     //    TO DO
-    // percent > 0 green < 0 red
-    // bitmaps - receive via api
 
-    // add refresh to action bar
     // different layout for portrait and landscape
     // handle permissions on >=marshmallow
+    // bitmaps - receive via api
     //    TO CHECK
-    // delimiters
-    // remove E10 in market cap
-    // remove $1 $2 in price
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+                presenter.onMenuRefreshPressed()
+                true
+            }
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_ticker_list, container, false)
