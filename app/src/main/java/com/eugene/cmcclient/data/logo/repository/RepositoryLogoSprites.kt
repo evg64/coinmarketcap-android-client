@@ -4,7 +4,6 @@ import android.graphics.*
 import android.util.Log
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.data.BackendLogoCSS
-import com.eugene.cmcclient.data.tickers.model.Name
 import com.eugene.cmcclient.data.tickers.model.StringId
 import com.eugene.cmcclient.di.Injector
 import com.gojuno.koptional.None
@@ -44,8 +43,8 @@ class RepositoryLogoSprites(
         val BITMAP_SCALE_FACTOR: Float = Injector.componentApp.getAppContext().displayMetrics.density
     }
 
-    private data class LogoInBitmap(val id: StringId, val position: Point, val width: Int, val height: Int)
-    private data class TickerIdWithBitmap(val id: StringId, val logo: Bitmap)
+    private data class LogoInBitmap(val tickerId: StringId, val position: Point, val width: Int, val height: Int)
+    private data class TickerIdWithBitmap(val tickerId: StringId, val logo: Bitmap)
 
 //    override fun getLogoMap(): Observable<Map<Name, URI>> {
 //        return Observable.just(mapOf<Name, URI>())
@@ -95,21 +94,18 @@ class RepositoryLogoSprites(
                     .doOnNext{ Log.d("DATA", "LogoInfo: $it")}
                     .subscribeOn(Schedulers.computation())
 
-//            return Observable.just(mapOf<Name, URI>())
             return Observable.combineLatest(
                     bitmapLoading,
                     cssRulesLoading,
                     BiFunction { bitmap: Bitmap, logoInfo: LogoInBitmap -> Pair(bitmap, logoInfo) })
-                    .map {
-                        getNameWithFilePath(it.first, it.second) }
+                    .map { toTickerIdWithBitmap(it.first, it.second) }
                     .filterSome()
-//                    .map { TickerIdWithBitmap(Name(it.id), URI.create(it.filepath)) }
-                    .map { TickerIdWithBitmap(it.id, it.logo) }
                     .toList()
                     .map { names: List<TickerIdWithBitmap> ->
-                        val map: MutableMap<StringId, Bitmap> = HashMap()
-                        names.forEach { map[it.id] = it.logo }
-                        map as Map<StringId, Bitmap>
+                        val tmp: MutableMap<StringId, Bitmap> = HashMap()
+                        names.forEach { tmp[it.tickerId] = it.logo }
+                        val result: Map<StringId, Bitmap> = HashMap(tmp)
+                        result
                     }
                     .doOnSuccess{ map = it }
                     .toObservable()
@@ -120,38 +116,29 @@ class RepositoryLogoSprites(
         }
     }
 
-    data class NameWithFilePath(val id: StringId, val logo: Bitmap)
+    private fun toTickerIdWithBitmap(bitmap: Bitmap, logoInfo: LogoInBitmap): Optional<TickerIdWithBitmap> {
+        val resultBitmap: Bitmap = Bitmap.createBitmap(
+                (logoInfo.width * BITMAP_SCALE_FACTOR).toInt(),
+                (logoInfo.height * BITMAP_SCALE_FACTOR).toInt(),
+                Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(resultBitmap)
+        val srcRect = Rect(
+                logoInfo.position.x,
+                logoInfo.position.y,
+                logoInfo.position.x + logoInfo.width,
+                logoInfo.position.y + logoInfo.height
+        )
+        canvas.drawBitmap(bitmap,
+                          srcRect,
+                          RectF(0F,
+                                0F,
+                                logoInfo.width * BITMAP_SCALE_FACTOR,
+                                logoInfo.height * BITMAP_SCALE_FACTOR),
+                          null
+        )
 
-    var drawn = false
-
-    private fun getNameWithFilePath(bitmap: Bitmap, logoInfo: LogoInBitmap): Optional<NameWithFilePath> {
-        if (drawn) {
-            return None
-        } else {
-//            drawn = true
-            val resultBitmap: Bitmap = Bitmap.createBitmap(
-                    (logoInfo.width * BITMAP_SCALE_FACTOR).toInt(),
-                    (logoInfo.height * BITMAP_SCALE_FACTOR).toInt(),
-                    Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(resultBitmap)
-            val srcRect = Rect(
-                    logoInfo.position.x,
-                    logoInfo.position.y,
-                    logoInfo.position.x + logoInfo.width,
-                    logoInfo.position.y + logoInfo.height
-            )
-            canvas.drawBitmap(bitmap,
-                              srcRect,
-                              RectF(0F,
-                                   0F,
-                                    logoInfo.width * BITMAP_SCALE_FACTOR,
-                                    logoInfo.height * BITMAP_SCALE_FACTOR),
-                              null
-            )
-
-            return NameWithFilePath(logoInfo.id, resultBitmap).toOptional()
-        }
+        return TickerIdWithBitmap(logoInfo.tickerId, resultBitmap).toOptional()
     }
 
     private fun computeLogoInBitmap(first: List<PropertyValue>, second: Matcher): Optional<LogoInBitmap> {
