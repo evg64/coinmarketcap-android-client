@@ -92,7 +92,7 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
                 presenter.onMenuRefreshPressed()
                 true
             }
-            R.id.action_settings -> true
+//            R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
