@@ -6,7 +6,7 @@ import com.eugene.cmcclient.data.tickers.model.Quantity
 /**
  * Created by Eugene on 18.01.2018.
  */
-class MarketCapFormatter : DecimalFormatter<Quantity>() {
+class MarketCapFormatter : DecimalFormatter<Quantity>(false) {
 
     private val symbolFormatter = SymbolFormatter()
 

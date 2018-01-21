@@ -73,8 +73,6 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     }
 
     //    TO DO
-
-    // different layout for portrait and landscape
     // handle permissions on >=marshmallow
     // bitmaps - receive via api
     //    TO CHECK
