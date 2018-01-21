@@ -29,22 +29,22 @@ class MapperTickerUI {
         colorNeutral = res.getColor(R.color.black_neutral)
     }
 
-    private fun map(ticker: Ticker): TickerUIModel {
-        return TickerUIModel("${ticker.rank}",
-                             ticker.name.value,
-                             priceFormatter.format(ticker.price),
-                             marketCapFormatter.format(ticker.marketCap),
-                             volumeFormatter.format(ticker.volume24h),
-                             circulatingSupplyFormatter.format(ticker.circulatingSupply),
-                             ticker.symbol.name,
-                             percentFormatter.format(ticker.percentChange1h),
-                             percentFormatter.format(ticker.percentChange24h),
-                             percentFormatter.format(ticker.percentChange7d),
-                             selectColorByPercent(ticker.percentChange1h),
-                             selectColorByPercent(ticker.percentChange24h),
-                             selectColorByPercent(ticker.percentChange7d),
-                             ticker.logo)
-    }
+    private fun map(ticker: Ticker) = TickerUIModel(
+            rank = "${ticker.rank}",
+            name = ticker.name.value,
+            price = priceFormatter.format(ticker.price),
+            marketCap = marketCapFormatter.format(ticker.marketCap),
+            volume24h = volumeFormatter.format(ticker.volume24h),
+            circulatingSupply = circulatingSupplyFormatter.format(ticker.circulatingSupply),
+            symbol = ticker.symbol.name,
+            percentChange1h = percentFormatter.formatTwice(R.string.percent_1h, ticker.percentChange1h),
+            percentChange24h = percentFormatter.formatTwice(R.string.percent_24h, ticker.percentChange24h),
+            percentChange7d = percentFormatter.formatTwice(R.string.percent_7d, ticker.percentChange7d),
+            percentChange1hTextColor = selectColorByPercent(ticker.percentChange1h),
+            percentChange24hTextColor = selectColorByPercent(ticker.percentChange24h),
+            percentChange7dTextColor = selectColorByPercent(ticker.percentChange7d),
+            logo = ticker.logo
+    )
 
     private fun selectColorByPercent(percent: Float): Int {
         return when {

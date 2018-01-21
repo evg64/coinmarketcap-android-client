@@ -8,4 +8,7 @@
     <string name="price">%1$s%2$s</string>
     <string name="circulating_supply">%1$s coins</string>
     <string name="refresh">Refresh</string>
+    <string name="percent_1h">%s 1h</string>
+    <string name="percent_24h">%s 24h</string>
+    <string name="percent_7d">%s 7d</string>
 </resources>
