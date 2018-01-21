@@ -1,17 +1,17 @@
 package com.eugene.cmcclient.ui.main.fragment_ticker_list
 
+import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
+import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.databinding.TickerBinding
 import com.eugene.cmcclient.ui.model.TickerUIModel
 import org.jetbrains.anko.layoutInflater
-import android.graphics.Bitmap
-import android.databinding.BindingAdapter
-import android.widget.ImageView
 
 
 class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
@@ -19,6 +19,7 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
 
     fun addItems(items: List<TickerUIModel>) {
         this.items.addAll(items)
+        updateCount()
     }
 
     fun clearItems() {
@@ -35,7 +36,7 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
         val start = System.nanoTime()
-        //holder?.onBind(position)
+        holder?.onBind(position)
         val p = System.nanoTime()
         val passed = (p.toDouble() - start.toDouble()) / 1000.0
         Log.d("Bind", "position $position, time $passed microseconds")
@@ -75,7 +76,10 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     }
 
     private var count: Int = 0
-    private fun updateCount() = items.size + if (showLoadingView) 1 else 0
+
+    private fun updateCount() {
+        count = items.size + if (showLoadingView) 1 else 0
+    }
 
     abstract inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun onBind(position: Int)
