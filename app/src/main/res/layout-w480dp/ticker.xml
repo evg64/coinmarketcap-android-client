@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ticker"
+            type="com.eugene.cmcclient.ui.model.TickerUIModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:gravity="left"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:imageBitmap="@{ticker.logo}"
+                android:scaleType="centerInside"
+                android:layout_marginLeft="8dp"
+                app:srcCompat="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/tv_symbol"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/iv_logo"
+                android:layout_height="wrap_content"
+                android:text="@{ticker.name, default = DASH}"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tvPrice"
+                android:layout_marginRight="24dp"
+                android:text='@{String.valueOf("Rank " + ticker.rank), default = "Rank 1"}'
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+                android:text='@{ticker.price, default = "18844$"}'
+                android:textSize="18sp"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_change_1h"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text='@{ticker.percentChange1h, default = "1% 1h"}'
+                android:textColor="@{ticker.percentChange1hTextColor}"
+                android:textSize="@dimen/percentChangeTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_logo"/>
+
+            <TextView
+                android:id="@+id/tv_change_1d"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text='@{ticker.percentChange24h, default = "3% 1d"}'
+                android:textColor="@{ticker.percentChange24hTextColor}"
+                android:textSize="@dimen/percentChangeTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_change_1h"/>
+
+            <TextView
+                android:id="@+id/tv_change_1w"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text='@{ticker.percentChange7d, default = "12% 1w"}'
+                android:layout_weight="1"
+                android:textColor="@{ticker.percentChange7dTextColor}"
+                android:textSize="@dimen/percentChangeTextSize"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/tv_change_1d"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_market_cap"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text='@{ticker.marketCap, default = "65.000.000.000$ MC"}'
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1h"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_volume_24h"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text='@{ticker.volume24h, default = "865.000.000$ VOL"}'
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1d"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_circulating_supply"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text='@{ticker.circulatingSupply, default = "21.000.000"}'
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1w"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
