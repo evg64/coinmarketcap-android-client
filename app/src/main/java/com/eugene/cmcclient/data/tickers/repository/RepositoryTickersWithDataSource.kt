@@ -24,22 +24,14 @@ open class RepositoryTickersWithDataSource(
     }
 
     override fun getTickers(from: Int, limit: Int): Observable<List<Ticker>> {
-//        val combineLatest = Observable.combineLatest(
-//                source.getTickers(from, limit),
-//                repositoryLogo.getLogoMap().toObservable(),
-//                BiFunction { tickers: List<TickerDataModel>, logos: Map<Name, URI> ->
-//                    adapter.transform(tickers, logos)
-//                })
-//        val obs: Observable<Map<Name, URI>> = repositoryLogo.getLogoMap()
-//        val obs: Observable<Map<Name, URI>> = Observable.just(mapOf<Name, URI>())
-        val combineLatest = Observable.combineLatest(
+        return Observable.combineLatest(
                 repositoryLogo.getLogoMap(),
                 source.getTickers(from, limit),
-//                Observable.just(mapOf<Name, URI>()),
-                BiFunction { logos: Map<StringId, Bitmap>, tickers: List<TickerDataModel> ->
+                BiFunction {
+                    logos: Map<StringId, Bitmap>, tickers: List<TickerDataModel> ->
                     adapter.transform(tickers, logos)
-                })
-        return combineLatest
+                }
+        )
     }
 
 }

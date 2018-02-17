@@ -1,5 +1,6 @@
 package com.eugene.cmcclient.ui.main.fragment_ticker_list
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.eugene.cmcclient.R
@@ -12,7 +13,11 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_ticker_list.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
+import android.util.Log
 import android.view.*
+import android.widget.TextView
+import io.reactivex.schedulers.Schedulers
+import java.nio.ByteBuffer
 
 
 class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
@@ -71,11 +76,6 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
         setHasOptionsMenu(true)
         component.inject(this)
     }
-
-    //    TO DO
-    // handle permissions on >=marshmallow
-    // bitmaps - receive via api
-    //    TO CHECK
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_main, menu)
