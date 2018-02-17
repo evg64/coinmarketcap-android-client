@@ -37,7 +37,7 @@ abstract class BaseMvpFragment : Fragment(),
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val activity = this.activity
         if (outState != null && activity is ComponentCache) {
