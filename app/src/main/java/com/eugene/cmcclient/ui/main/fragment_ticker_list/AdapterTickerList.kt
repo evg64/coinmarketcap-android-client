@@ -35,11 +35,13 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
-        val start = System.nanoTime()
-        holder?.onBind(position)
-        val p = System.nanoTime()
-        val passed = (p.toDouble() - start.toDouble()) / 1000.0
-        Log.d("Bind", "position $position, time $passed microseconds")
+        trace("AdapterTickerList#onBindViewHolder", {
+            val start = System.nanoTime()
+            holder?.onBind(position)
+            val p = System.nanoTime()
+            val passed = (p.toDouble() - start.toDouble()) / 1000.0
+            Log.d("Bind", "position $position, time $passed microseconds")
+        })
     }
 
     companion object {
@@ -52,17 +54,19 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): Holder {
-        return when (viewType) {
-            ViewTypes.TICKER -> {
-                val v = parent?.context?.layoutInflater?.inflate(R.layout.ticker, parent, false)
-                HolderTicker(v!!)
-            }
-            ViewTypes.LOADING -> {
-                val v = parent?.context?.layoutInflater?.inflate(R.layout.loading_adapter_item, parent, false)
-                HolderLoading(v!!)
-            }
-            else -> {
-                throw IllegalArgumentException("Unsupported view type " + viewType)
+        return trace("AdapterTickerList#onCreateViewHolder") {
+            when (viewType) {
+                ViewTypes.TICKER -> {
+                    val v = parent?.context?.layoutInflater?.inflate(R.layout.ticker, parent, false)
+                    HolderTicker(v!!)
+                }
+                ViewTypes.LOADING -> {
+                    val v = parent?.context?.layoutInflater?.inflate(R.layout.loading_adapter_item, parent, false)
+                    HolderLoading(v!!)
+                }
+                else -> {
+                    throw IllegalArgumentException("Unsupported view type " + viewType)
+                }
             }
         }
     }
