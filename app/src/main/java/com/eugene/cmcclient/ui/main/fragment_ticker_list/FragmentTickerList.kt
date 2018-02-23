@@ -1,23 +1,19 @@
 package com.eugene.cmcclient.ui.main.fragment_ticker_list
 
-import android.graphics.Paint
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.*
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.ui.common.mvp.BaseMvpFragment
 import com.eugene.cmcclient.ui.main.MvpTickerList
 import com.eugene.cmcclient.ui.model.TickerUIModel
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
-import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView
 import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_ticker_list.*
 import javax.inject.Inject
-import android.support.v7.widget.DividerItemDecoration
-import android.util.Log
-import android.view.*
-import android.widget.TextView
-import io.reactivex.schedulers.Schedulers
-import java.nio.ByteBuffer
 
 
 class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
@@ -26,7 +22,7 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
 
     @Inject lateinit var adapter: AdapterTickerList
 
-    private lateinit var itemsBelowScreenObservable: Observable<Int>
+    private var itemsBelowScreenObservable: BehaviorSubject<Int> = BehaviorSubject.create()
 
     private lateinit var recyclerRefreshObservable: Observable<Any>
 
@@ -99,6 +95,8 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
         return inflater.inflate(R.layout.fragment_ticker_list, container, false)
     }
 
+    var itemCountBelowLastVisible = Integer.MIN_VALUE
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         rv.layoutManager = layoutManager
@@ -106,9 +104,19 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
 
         rv.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
 
-        itemsBelowScreenObservable = RxRecyclerView.scrollEvents(rv)
-                .map { getItemCountBelowLastVisibleItem() }
-                .distinctUntilChanged()
+        rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val tmp = getItemCountBelowLastVisibleItem()
+                if (itemCountBelowLastVisible != tmp) {
+                    itemCountBelowLastVisible = tmp
+                    itemsBelowScreenObservable.onNext(tmp)
+                }
+            }
+        })
+//        itemsBelowScreenObservable = RxRecyclerView.scrollEvents(rv)
+//                .map { getItemCountBelowLastVisibleItem() }
+//                .distinctUntilChanged()
         recyclerRefreshObservable = RxSwipeRefreshLayout.refreshes(pullToRefresh)
         presenter.attach(this)
 //        presenter.onActivityCreated()
