@@ -44,7 +44,7 @@ class AdapterTickerList @Inject constructor(private var viewProvider: CachedInfl
     }
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
-        trace("AdapterTickerList#onBindViewHolder", {
+        trace("ATL#onBindViewHolder", {
             val start = System.nanoTime()
             holder?.onBind(position)
             val p = System.nanoTime()
@@ -63,7 +63,10 @@ class AdapterTickerList @Inject constructor(private var viewProvider: CachedInfl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): Holder {
-        return trace("AdapterTickerList#onCreateViewHolder") {
+        with(Thread.currentThread()) {
+            Log.d("Thread", "Tread id=$id, priority=$priority")
+        }
+        return trace("ATL#onCreateViewHolder", {
             val inflater: LayoutInflater = parent?.context?.layoutInflater!!
             val v = viewProvider.getView(inflater, parent, viewType)
             when (viewType) {
@@ -71,7 +74,7 @@ class AdapterTickerList @Inject constructor(private var viewProvider: CachedInfl
                 ViewTypes.LOADING -> HolderLoading(v)
                 else -> throw IllegalArgumentException("Unsupported view type " + viewType)
             }
-        }
+        })
     }
 
     override fun getItemViewType(position: Int): Int {
