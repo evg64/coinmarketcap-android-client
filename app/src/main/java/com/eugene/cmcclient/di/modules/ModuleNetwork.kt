@@ -3,6 +3,7 @@ package com.eugene.cmcclient.di.modules
 import android.content.Context
 import android.util.Log
 import com.eugene.cmcclient.data.BackendLogoCSS
+import com.eugene.cmcclient.data.BackendLogoCSSAssets
 import com.eugene.cmcclient.data.BackendMain
 import com.eugene.cmcclient.data.DataConstants
 import com.eugene.cmcclient.di.AppContext
@@ -29,8 +30,12 @@ class ModuleNetwork {
         return retrofit.create(BackendMain::class.java)
     }
 
-    @Provides @ScopeApp fun provideBackendCSS(@Named("LogosBackend") retrofit: Retrofit): BackendLogoCSS {
-        return retrofit.create(BackendLogoCSS::class.java)
+    @Provides @ScopeApp fun provideBackendCSS(
+            @Named("LogosBackend") retrofit: Retrofit,
+            @AppContext context: Context
+    ): BackendLogoCSS {
+        return BackendLogoCSSAssets(context)
+//        return retrofit.create(BackendLogoCSS::class.java)
     }
 
     @Provides @ScopeApp @Named("MainBackend") fun provideRetrofit(callAdapterFactory: CallAdapter.Factory, converterFactory: Converter.Factory, client: OkHttpClient): Retrofit {
