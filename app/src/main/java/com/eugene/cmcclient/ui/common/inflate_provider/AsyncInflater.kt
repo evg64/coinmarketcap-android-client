@@ -1,25 +1,21 @@
 package com.eugene.cmcclient.ui.common.inflate_provider
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.eugene.cmcclient.ui.common.inflate_provider.cache.InflatedProviderCache
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
+import java.util.concurrent.Executors
 
 /**
  * Inflates views into cache
  */
 internal class AsyncInflater {
 
-    private val chain: BehaviorSubject<Task> = BehaviorSubject.create()
-
-    init {
-        chain.map {
-            for (i in 0 until it.count) {
-                val view = it.inflater.inflate(it.layoutId, it.parent, false)
-                it.cache.push(it.viewType, view)
-            }
-        }.subscribeOn(Schedulers.computation()).subscribe()
+//    private val worker = Executors.newSingleThreadExecutor()
+    private val worker = Executors.newSingleThreadExecutor {
+        val result = Thread(it)
+        result.priority = Thread.MIN_PRIORITY
+        result
     }
 
     fun inflateSingle(
@@ -37,7 +33,8 @@ internal class AsyncInflater {
                 layoutId: Int,
                 viewType: Int,
                 count: Int) {
-        chain.onNext(Task(inflater, parent, cache, layoutId, viewType, count))
+        val task = Task(inflater, parent, cache, layoutId, viewType, count)
+        worker.submit(task)
     }
 
     private class Task(val inflater: LayoutInflater,
@@ -45,5 +42,20 @@ internal class AsyncInflater {
                        val cache: InflatedProviderCache,
                        val layoutId: Int,
                        val viewType: Int,
-                       val count: Int)
+                       val count: Int) : Runnable {
+        init {
+            Log.d("TAG", "")
+        }
+
+        override fun run() {
+            with(Thread.currentThread()) {
+                Log.d("Thread", "Tread id=$id, priority=$priority")
+            }
+            for (i in 0 until count) {
+                val view = inflater.inflate(layoutId, parent, false)
+                cache.push(viewType, view)
+            }
+        }
+
+    }
 }
