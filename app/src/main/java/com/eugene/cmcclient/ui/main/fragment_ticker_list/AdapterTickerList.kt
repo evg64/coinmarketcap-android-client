@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.os.trace
+import com.eugene.cmcclient.BuildConfig
 import com.eugene.cmcclient.databinding.TickerBinding
 import com.eugene.cmcclient.ui.common.inflate_provider.CachedInflatedViewsProvider
 import com.eugene.cmcclient.ui.model.TickerUIModel
@@ -121,4 +122,11 @@ class AdapterTickerList @Inject constructor(private var viewProvider: CachedInfl
             field = value
             updateCount()
         }
+
+    override fun onFailedToRecycleView(holder: Holder?): Boolean {
+        if (BuildConfig.DEBUG) {
+            throw RuntimeException("Failed to recycle $holder")
+        }
+        return super.onFailedToRecycleView(holder)
+    }
 }
