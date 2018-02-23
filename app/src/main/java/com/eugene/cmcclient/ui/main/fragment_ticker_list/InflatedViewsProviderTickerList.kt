@@ -13,8 +13,8 @@ class InflatedViewsProviderTickerList : InflatedViewsProviderAsync(viewTypes, ca
                 AdapterTickerList.ViewTypes.LOADING to R.layout.loading_adapter_item
         )
         val cacheSizes = mapOf(
-                AdapterTickerList.ViewTypes.TICKER to R.layout.ticker,
-                AdapterTickerList.ViewTypes.LOADING to R.layout.loading_adapter_item
+                AdapterTickerList.ViewTypes.TICKER to 8,
+                AdapterTickerList.ViewTypes.LOADING to 1
         )
     }
 }
