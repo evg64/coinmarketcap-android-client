@@ -18,7 +18,12 @@ class InflatedProviderCache constructor(private val viewTypeCount: Int) {
         if (viewType >= viewTypeCount) {
             throw IllegalArgumentException("ViewType ($viewType) should be less than viewTypeCount ($viewTypeCount)")
         }
-        return cache[viewType]?.pop()
+        val cacheForViewType = cache[viewType]
+        return if (cacheForViewType == null || cacheForViewType.isEmpty()) {
+            null
+        } else {
+            cacheForViewType.pop()
+        }
     }
 
     fun push(viewType: Int, view: View) {
