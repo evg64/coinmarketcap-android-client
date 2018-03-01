@@ -27,6 +27,11 @@ class AdapterTickerList @Inject constructor(private var viewProvider: CachedInfl
         viewProvider.setupCache(inflater, recyclerView)
     }
 
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+        viewProvider.cleanupViews()
+        super.onDetachedFromRecyclerView(recyclerView)
+    }
+
     fun addItems(items: List<TickerUIModel>) {
         this.items.addAll(items)
         updateCount()
