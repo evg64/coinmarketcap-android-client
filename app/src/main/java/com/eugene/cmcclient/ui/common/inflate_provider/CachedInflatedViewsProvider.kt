@@ -7,6 +7,6 @@ import android.view.ViewGroup
  * Created by Eugene on 20.02.2018.
  */
 interface CachedInflatedViewsProvider : InflatedViewsProvider {
-    fun setupCache(inflater: LayoutInflater, parent: ViewGroup?)
+    fun setupCacheAsync(inflater: LayoutInflater, parent: ViewGroup?)
     fun getCacheSizes(): Map<Int, Int>
 }

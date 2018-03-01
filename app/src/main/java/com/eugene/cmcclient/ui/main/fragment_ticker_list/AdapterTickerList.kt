@@ -24,7 +24,7 @@ class AdapterTickerList @Inject constructor(private var viewProvider: CachedInfl
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
         super.onAttachedToRecyclerView(recyclerView)
         val inflater: LayoutInflater = recyclerView?.context?.layoutInflater!!
-        viewProvider.setupCache(inflater, recyclerView)
+        viewProvider.setupCacheAsync(inflater, recyclerView)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {

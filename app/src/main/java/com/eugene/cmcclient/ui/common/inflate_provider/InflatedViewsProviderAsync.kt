@@ -50,7 +50,7 @@ open class InflatedViewsProviderAsync(
         }
     }
 
-    override fun setupCache(inflater: LayoutInflater, parent: ViewGroup?) {
+    override fun setupCacheAsync(inflater: LayoutInflater, parent: ViewGroup?) {
         for (entry in getCacheSizes().entries) {
             val viewType = entry.key
             val cacheSize = entry.value
