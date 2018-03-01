@@ -10,4 +10,5 @@ import android.view.ViewGroup
 interface InflatedViewsProvider {
     fun getView(inflater: LayoutInflater, parent: ViewGroup, viewType: Int) : View
     fun getViewTypeMap() : Map<Int, Int>
+    fun cleanupViews()
 }

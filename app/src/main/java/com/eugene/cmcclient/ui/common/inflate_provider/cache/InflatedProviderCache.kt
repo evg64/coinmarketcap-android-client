@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap
 /**
  * Created by Eugene on 20.02.2018.
  */
-class InflatedProviderCache constructor(private val viewTypeCount: Int) {
+class InflatedProviderCache(private val viewTypeCount: Int) {
     private val cache: MutableMap<Int, Deque<View>> = ConcurrentHashMap()
 
     init {

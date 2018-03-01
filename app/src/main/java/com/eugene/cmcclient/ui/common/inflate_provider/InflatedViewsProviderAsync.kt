@@ -13,6 +13,11 @@ open class InflatedViewsProviderAsync(
         private val mCacheSizes: Map<Int, Int>
 ) : CachedInflatedViewsProvider {
 
+    override fun cleanupViews() {
+        inflater.cancelAllTasks()
+        cache.reset()
+    }
+
     val cache: InflatedProviderCache = InflatedProviderCache(mViewTypesToLayoutIds.size)
 
     private val inflater = AsyncInflater()
@@ -45,7 +50,7 @@ open class InflatedViewsProviderAsync(
         }
     }
 
-    override fun setupCache(inflater: LayoutInflater, parent: ViewGroup) {
+    override fun setupCache(inflater: LayoutInflater, parent: ViewGroup?) {
         for (entry in getCacheSizes().entries) {
             val viewType = entry.key
             val cacheSize = entry.value

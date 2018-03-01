@@ -20,7 +20,7 @@ internal class AsyncInflater {
 
     fun inflateSingle(
             inflater: LayoutInflater,
-            parent: ViewGroup,
+            parent: ViewGroup?,
             cache: InflatedProviderCache,
             layoutId: Int,
             viewType: Int) {
@@ -28,34 +28,44 @@ internal class AsyncInflater {
     }
 
     fun inflateSeveral(inflater: LayoutInflater,
-                parent: ViewGroup,
+                parent: ViewGroup?,
                 cache: InflatedProviderCache,
                 layoutId: Int,
                 viewType: Int,
                 count: Int) {
-        val task = Task(inflater, parent, cache, layoutId, viewType, count)
-        worker.submit(task)
+        worker.submit(Task(inflater, parent, cache, layoutId, viewType, count, this))
     }
 
     private class Task(val inflater: LayoutInflater,
-                       val parent: ViewGroup,
+                       val parent: ViewGroup?,
                        val cache: InflatedProviderCache,
                        val layoutId: Int,
                        val viewType: Int,
-                       val count: Int) : Runnable {
+                       val count: Int,
+                       val monitor: AsyncInflater) : Runnable {
         init {
             Log.d("TAG", "")
         }
 
         override fun run() {
-            with(Thread.currentThread()) {
-                Log.d("Thread", "Tread id=$id, priority=$priority")
-            }
-            for (i in 0 until count) {
-                val view = inflater.inflate(layoutId, parent, false)
-                cache.push(viewType, view)
-            }
+            synchronized(monitor, {
+                try {
+                    with(Thread.currentThread()) {
+                        Log.d("Thread", "Tread id=$id, priority=$priority")
+                    }
+                    for (i in 0 until count) {
+                        val view = inflater.inflate(layoutId, parent, false)
+                        cache.push(viewType, view)
+                    }
+                } catch (e: InterruptedException) {
+                    Log.d("Thread", "Tread was interrupted")
+                }
+            })
         }
 
+    }
+
+    fun cancelAllTasks() {
+        synchronized(this, { worker.shutdownNow() })
     }
 }
