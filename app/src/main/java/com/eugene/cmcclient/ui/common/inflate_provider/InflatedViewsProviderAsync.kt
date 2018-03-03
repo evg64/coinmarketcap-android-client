@@ -36,15 +36,10 @@ open class InflatedViewsProviderAsync(
 
     override fun getView(inflater: LayoutInflater, parent: ViewGroup, viewType: Int): View {
         val cached = cache.pop(viewType)
+        val layoutId = getLayoutId(viewType)
         return if (cached == null) {
-            val resId: Int? = getViewTypeMap()[viewType]
-            if (resId == null) {
-                throw NullPointerException()
-            } else {
-                inflater.inflate(resId, parent, false)
-            }
+            inflater.inflate(layoutId, parent, false)
         } else {
-            val layoutId = getLayoutId(viewType)
             this.inflater.inflateSingle(inflater, parent, cache, layoutId, viewType)
             cached
         }

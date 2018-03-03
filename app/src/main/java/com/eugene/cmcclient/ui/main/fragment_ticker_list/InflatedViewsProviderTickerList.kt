@@ -9,6 +9,9 @@ import com.eugene.cmcclient.ui.common.inflate_provider.InflatedViewsProviderAsyn
 class InflatedViewsProviderTickerList : InflatedViewsProviderAsync(viewTypes, cacheSizes) {
     companion object {
         val viewTypes = mapOf(
+                // we don`t have to take into account different layouts for
+                // different screen orientations, since value of R.layout.ticker
+                // is the same in any orientation
                 AdapterTickerList.ViewTypes.TICKER to R.layout.ticker,
                 AdapterTickerList.ViewTypes.LOADING to R.layout.loading_adapter_item
         )

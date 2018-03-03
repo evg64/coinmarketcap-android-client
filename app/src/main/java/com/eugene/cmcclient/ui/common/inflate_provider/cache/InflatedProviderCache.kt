@@ -31,6 +31,8 @@ class InflatedProviderCache(private val viewTypeCount: Int) {
     }
 
     fun reset() {
-        cache.clear()
+        for (value in cache.values) {
+            value.clear()
+        }
     }
 }
