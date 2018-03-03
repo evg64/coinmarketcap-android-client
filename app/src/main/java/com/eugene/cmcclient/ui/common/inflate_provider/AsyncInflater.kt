@@ -12,7 +12,9 @@ import java.util.concurrent.Executors
 internal class AsyncInflater {
 
 //    private val worker = Executors.newSingleThreadExecutor()
-    private val worker = Executors.newSingleThreadExecutor {
+    private var worker = newWorker()
+
+    private fun newWorker() = Executors.newSingleThreadExecutor {
         val result = Thread(it)
         result.priority = Thread.MIN_PRIORITY
         result
@@ -66,6 +68,9 @@ internal class AsyncInflater {
     }
 
     fun cancelAllTasks() {
-        synchronized(this, { worker.shutdownNow() })
+        synchronized(this, {
+            worker.shutdownNow()
+            worker = newWorker()
+            })
     }
 }
