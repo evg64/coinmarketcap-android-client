@@ -27,7 +27,7 @@
                 android:id="@+id/iv_logo"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:imageBitmap="@{ticker.logo}"
+                android:src="@{ticker.logo}"
                 android:scaleType="centerInside"
                 android:layout_marginLeft="8dp"
                 app:srcCompat="@mipmap/ic_launcher"/>
@@ -80,7 +80,7 @@
                 android:gravity="center"
                 android:text='@{ticker.percentChange1h, default = "1% 1h"}'
                 android:textColor="@{ticker.percentChange1hTextColor}"
-                android:textSize="@dimen/percentChangeTextSize"
+                android:textSize="@dimen/percentChangeMarketCapTextSize"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_logo"/>
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:text='@{ticker.percentChange24h, default = "3% 1d"}'
                 android:textColor="@{ticker.percentChange24hTextColor}"
-                android:textSize="@dimen/percentChangeTextSize"
+                android:textSize="@dimen/percentChangeMarketCapTextSize"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_change_1h"/>
 
@@ -103,7 +103,7 @@
                 android:text='@{ticker.percentChange7d, default = "12% 1w"}'
                 android:layout_weight="1"
                 android:textColor="@{ticker.percentChange7dTextColor}"
-                android:textSize="@dimen/percentChangeTextSize"
+                android:textSize="@dimen/percentChangeMarketCapTextSize"
                 app:layout_constraintStart_toStartOf="parent"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/tv_change_1d"/>

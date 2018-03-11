@@ -21,7 +21,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:imageBitmap="@{ticker.logo}"
+            android:src="@{ticker.logo}"
             android:scaleType="centerInside"
             app:layout_constraintStart_toEndOf="@+id/tv_rank"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,35 +46,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:textSize="@dimen/percentChangeTextSize"
-            android:textColor="@{ticker.percentChange1hTextColor}"
-            android:text='@{ticker.percentChange1h, default = "1% 1h"}'
+            android:textSize="@dimen/percentChangeMarketCapTextSize"
+            android:text='@{ticker.percentChanges, default = "1% 1h"}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_logo"/>
-
-        <TextView
-            android:id="@+id/tv_change_1d"
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/percentChangeTextSize"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text='@{ticker.percentChange24h, default = "3% 1d"}'
-            android:textColor="@{ticker.percentChange24hTextColor}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_change_1h"/>
-
-        <TextView
-            android:id="@+id/tv_change_1w"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@{ticker.percentChange7dTextColor}"
-            android:textSize="@dimen/percentChangeTextSize"
-            android:text='@{ticker.percentChange7d, default = "12% 1w"}'
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_change_1d"/>
 
         <TextView
             android:id="@+id/tv_rank"
@@ -92,26 +67,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text='@{ticker.marketCap, default = "65.000.000.000$ MC"}'
+            android:textSize="@dimen/percentChangeMarketCapTextSize"
+            android:text='@{ticker.capVolumeCirculatingSupply, default = "65.000.000.000$ MC"}'
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1h"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/tv_volume_24h"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text='@{ticker.volume24h, default = "865.000.000$ VOL"}'
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1d"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/tv_circulating_supply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text='@{ticker.circulatingSupply, default = "21.000.000"}'
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1w"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
