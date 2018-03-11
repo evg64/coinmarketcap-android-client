@@ -13,7 +13,7 @@ open class VolumeFormatter : DecimalFormatter<Quantity>(false) {
     override fun format(what: Quantity): String {
         return res.getString(
                 R.string.volume,
-                decimalFormatter.format(what.value),
+                getDecimalFormatter().format(what.value),
                 symbolFormatter.format(what.nominatedIn)
         )
     }
