@@ -79,7 +79,10 @@ class RepositoryLogoSprites(
 
             val cssRulesLoading = logosBackend.getLogosCSS()
                     .subscribeOn(Schedulers.io())
-                    .map { CSSParser.parse(it.string()) }
+                    .map {
+                        listOf<Rule>()
+//                        CSSParser.parse(it.string())
+                    }
                     .flatMapIterable { it }
                     .filter { rule: Rule -> rule.selectors.size == 1 }
                     .map { rule: Rule ->
