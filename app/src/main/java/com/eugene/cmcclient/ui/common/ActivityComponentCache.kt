@@ -27,7 +27,7 @@ open class ActivityComponentCache : AppCompatActivity(), ComponentCache {
     /**
      * This method should not be overriden by subclasses, it is used to retain component cache
      */
-    override final fun onRetainCustomNonConfigurationInstance(): ComponentCache {
+    final override fun onRetainCustomNonConfigurationInstance(): ComponentCache {
         return internalCache
     }
 

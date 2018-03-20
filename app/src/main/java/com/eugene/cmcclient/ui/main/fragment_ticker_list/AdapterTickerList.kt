@@ -5,17 +5,32 @@ import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.eugene.cmcclient.R
+import androidx.os.trace
+import com.eugene.cmcclient.BuildConfig
 import com.eugene.cmcclient.databinding.TickerBinding
+import com.eugene.cmcclient.ui.common.inflate_provider.CachedInflatedViewsProvider
 import com.eugene.cmcclient.ui.model.TickerUIModel
 import org.jetbrains.anko.layoutInflater
+import javax.inject.Inject
 
 
-class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
+class AdapterTickerList @Inject constructor(private var viewProvider: CachedInflatedViewsProvider): RecyclerView.Adapter<AdapterTickerList.Holder>() {
     private val items: MutableList<TickerUIModel> = mutableListOf()
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+        super.onAttachedToRecyclerView(recyclerView)
+        val inflater: LayoutInflater = recyclerView?.context?.layoutInflater!!
+        viewProvider.setupCacheAsync(inflater, recyclerView)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+        viewProvider.cleanupViews()
+        super.onDetachedFromRecyclerView(recyclerView)
+    }
 
     fun addItems(items: List<TickerUIModel>) {
         this.items.addAll(items)
@@ -35,7 +50,7 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
-        trace("AdapterTickerList#onBindViewHolder", {
+        trace("ATL#onBindViewHolder", {
             val start = System.nanoTime()
             holder?.onBind(position)
             val p = System.nanoTime()
@@ -54,21 +69,18 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): Holder {
-        return trace("AdapterTickerList#onCreateViewHolder") {
-            when (viewType) {
-                ViewTypes.TICKER -> {
-                    val v = parent?.context?.layoutInflater?.inflate(R.layout.ticker, parent, false)
-                    HolderTicker(v!!)
-                }
-                ViewTypes.LOADING -> {
-                    val v = parent?.context?.layoutInflater?.inflate(R.layout.loading_adapter_item, parent, false)
-                    HolderLoading(v!!)
-                }
-                else -> {
-                    throw IllegalArgumentException("Unsupported view type " + viewType)
-                }
-            }
+        with(Thread.currentThread()) {
+            Log.d("Thread", "Tread id=$id, priority=$priority")
         }
+        return trace("ATL#onCreateViewHolder", {
+            val inflater: LayoutInflater = parent?.context?.layoutInflater!!
+            val v = viewProvider.getView(inflater, parent, viewType)
+            when (viewType) {
+                ViewTypes.TICKER -> HolderTicker(v)
+                ViewTypes.LOADING -> HolderLoading(v)
+                else -> throw IllegalArgumentException("Unsupported view type " + viewType)
+            }
+        })
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -115,4 +127,11 @@ class AdapterTickerList : RecyclerView.Adapter<AdapterTickerList.Holder>() {
             field = value
             updateCount()
         }
+
+    override fun onFailedToRecycleView(holder: Holder?): Boolean {
+        if (BuildConfig.DEBUG) {
+            throw RuntimeException("Failed to recycle $holder")
+        }
+        return super.onFailedToRecycleView(holder)
+    }
 }

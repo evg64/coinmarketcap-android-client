@@ -5,6 +5,6 @@ package com.eugene.cmcclient.ui.common.formatters
  */
 class DoubleFormatter(require2DecimalDigits: Boolean) : DecimalFormatter<Double>(require2DecimalDigits) {
     override fun format(what: Double): String {
-        return decimalFormatter.format(what)
+        return getDecimalFormatter().format(what)
     }
 }

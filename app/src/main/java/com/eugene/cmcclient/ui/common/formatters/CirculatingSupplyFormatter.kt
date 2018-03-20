@@ -7,6 +7,6 @@ import com.eugene.cmcclient.R
  */
 class CirculatingSupplyFormatter: DecimalFormatter<Double>(false) {
     override fun format(what: Double): String {
-        return res.getString(R.string.circulating_supply, decimalFormatter.format(what))
+        return res.getString(R.string.circulating_supply, getDecimalFormatter().format(what))
     }
 }

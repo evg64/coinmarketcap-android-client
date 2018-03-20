@@ -13,7 +13,7 @@ class MarketCapFormatter : DecimalFormatter<Quantity>(false) {
     override fun format(what: Quantity): String {
         return res.getString(
                 R.string.market_cap,
-                decimalFormatter.format(what.value),
+                getDecimalFormatter().format(what.value),
                 symbolFormatter.format(what.nominatedIn)
         )
     }
