@@ -12,17 +12,17 @@ class PriceFormatter : DecimalFormatter<Price>(true) {
 
     private val decimalFormatForSmallDigits = DecimalFormat("###,##0.000##")
 
-    private fun getDecimalFormatter(value: Float): DecimalFormat {
-        return if (value < 0.1f)
-            decimalFormatForSmallDigits
-        else
-            super.getDecimalFormatter()
-    }
+        private fun getDecimalFormatter(value: Float): DecimalFormat {
+            return if (value < 0.1f)
+                decimalFormatForSmallDigits
+            else
+                super.getDecimalFormatter()
+        }
 
-    override fun format(what: Price): String {
-        return res.getString(
-                R.string.price,
-                getDecimalFormatter(what.value).format(what.value),
-                symbolFormatter.format(what.nominatedIn))
+        override fun format(what: Price): String {
+            return res.getString(
+                    R.string.price,
+                    getDecimalFormatter(what.value).format(what.value),
+                    symbolFormatter.format(what.nominatedIn))
+        }
     }
-}
