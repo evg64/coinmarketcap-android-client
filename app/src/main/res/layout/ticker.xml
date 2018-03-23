@@ -30,7 +30,8 @@
         <TextView
             android:id="@+id/tv_symbol"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="start|center_vertical"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@{ticker.name, default = DASH}"
@@ -42,7 +43,7 @@
 
         <TextView
             android:id="@+id/tv_change_1h"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -54,9 +55,9 @@
         <TextView
             android:id="@+id/tv_rank"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text='@{ticker.rank, default = "1"}'
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -64,19 +65,23 @@
 
         <TextView
             android:id="@+id/tv_market_cap"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:textSize="@dimen/percentChangeMarketCapTextSize"
+            android:gravity="right"
+            android:layout_marginStart="8dp"
             android:text='@{ticker.capVolumeCirculatingSupply, default = "65.000.000.000$ MC"}'
+            android:textSize="@dimen/percentChangeMarketCapTextSize"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_change_1h"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_change_1h"/>
 
         <TextView
             android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
             android:layout_marginEnd="8dp"
+            android:gravity="end|center_vertical"
             android:text='@{ticker.price, default = "18844$"}'
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_symbol"
