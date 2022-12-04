@@ -2,9 +2,9 @@ package com.eugene.cmcclient.ui.main.fragment_ticker_list
 
 import android.graphics.Paint
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.ui.common.mvp.BaseMvpFragment
@@ -13,10 +13,10 @@ import com.eugene.cmcclient.ui.model.TickerUIModel
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.android.synthetic.main.fragment_ticker_list.*
 import javax.inject.Inject
 import android.util.Log
 import android.widget.TextView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.reactivex.schedulers.Schedulers
 import java.nio.ByteBuffer
 
@@ -27,12 +27,19 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
 
     @Inject lateinit var adapter: AdapterTickerList
 
+    private lateinit var pullToRefresh: SwipeRefreshLayout
+    private lateinit var rv: RecyclerView
+
     private var itemsBelowScreenObservable: BehaviorSubject<Int> = BehaviorSubject.create()
 
     private lateinit var recyclerRefreshObservable: Observable<Any>
 
     private val layoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        LinearLayoutManager(
+            activity,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
     }
 
     override fun showLoading() {
@@ -78,8 +85,8 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
         component.inject(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.menu_main, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -97,20 +104,28 @@ class FragmentTickerList : BaseMvpFragment(), MvpTickerList.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_ticker_list, container, false)
+        return inflater.inflate(R.layout.fragment_ticker_list, container, false).also {
+            pullToRefresh = it.findViewById(R.id.pullToRefresh)
+        }
     }
 
     var itemCountBelowLastVisible = Integer.MIN_VALUE
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        rv = requireView().findViewById<RecyclerView>(R.id.rv)
         rv.layoutManager = layoutManager
         rv.adapter = adapter
 
-        rv.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        rv.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val tmp = getItemCountBelowLastVisibleItem()
                 if (itemCountBelowLastVisible != tmp) {

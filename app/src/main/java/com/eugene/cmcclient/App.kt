@@ -18,18 +18,18 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         res = resources
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                                               .detectAll()
-                                               .penaltyLog()
-                                               .penaltyDeath()
-                                               .build())
-            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                                           .detectAll()
-                                           .penaltyLog()
-                                           .penaltyDeath()
-                                           .build())
-        }
+        // if (BuildConfig.DEBUG) {
+        //     StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+        //                                        .detectAll()
+        //                                        .penaltyLog()
+        //                                        .penaltyDeath()
+        //                                        .build())
+        //     StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+        //                                    .detectAll()
+        //                                    .penaltyLog()
+        //                                    .penaltyDeath()
+        //                                    .build())
+        // }
 
         Injector.initComponentApp(this)
 //        val publish: PublishSubject<Long> = PublishSubject.create()

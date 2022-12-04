@@ -1,7 +1,7 @@
 package com.eugene.cmcclient.ui.common
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.eugene.cmcclient.di.Injector
 import com.eugene.cmcclient.di.component_cache.ComponentCache
 import com.eugene.cmcclient.di.components.CacheableComponent

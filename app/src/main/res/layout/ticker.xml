@@ -11,7 +11,7 @@
             type="com.eugene.cmcclient.ui.model.TickerUIModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="150dp">
 
@@ -86,5 +86,5 @@
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_symbol"
             app:layout_constraintEnd_toEndOf="parent"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

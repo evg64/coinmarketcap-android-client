@@ -15,7 +15,6 @@ import javax.inject.Named
  * Created by Eugene on 13.12.2017.
  */
 @Module
-@ScopeFragment
 class ModuleFragment {
     @ScopeFragment
     @Provides

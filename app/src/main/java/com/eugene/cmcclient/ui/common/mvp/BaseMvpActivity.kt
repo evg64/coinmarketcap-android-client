@@ -23,7 +23,7 @@ abstract class BaseMvpActivity : ActivityComponentCache(),
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (outState != null) {
             storeComponent(component, outState)

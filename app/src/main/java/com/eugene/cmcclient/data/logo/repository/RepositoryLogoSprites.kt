@@ -18,7 +18,6 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.displayMetrics
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -40,7 +39,7 @@ class RepositoryLogoSprites(
         private val PATTERN_STYLENAME = Pattern.compile("\\.s-s-(\\w+)")
         private val PATTERN_POSITION = Pattern.compile("(-?\\d+)(px)? (-?\\d+)(px)?")
         private val PATTERN_WIDTH_HEIGHT = Pattern.compile("(\\d+)px")
-        val BITMAP_SCALE_FACTOR: Float = Injector.componentApp.getAppContext().displayMetrics.density
+        const val BITMAP_SCALE_FACTOR: Float = 1f//Injector.componentApp.getAppContext().displayMetrics.density
     }
 
     private data class LogoInBitmap(val tickerId: StringId, val position: Point, val width: Int, val height: Int)

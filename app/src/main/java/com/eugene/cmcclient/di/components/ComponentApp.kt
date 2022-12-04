@@ -21,7 +21,7 @@ interface ComponentApp {
     fun getApiService() : BackendMain
     fun getTickerRepo() : RepositoryTickers
     fun getComponentCache() : ComponentCache
-    @FilesRoot fun getRootStorage(): File
+    @FilesRoot fun getRootStorage(): File?
 
     @AppContext fun getAppContext(): Context
 

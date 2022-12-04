@@ -13,5 +13,6 @@ import java.io.File
  */
 @Module (includes = [ModuleContext::class])
 class ModuleFileSystem {
-    @ScopeApp @Provides @FilesRoot fun provideRootStorage(@AppContext context: Context): File = context.getExternalFilesDir(null)
+    @ScopeApp @Provides @FilesRoot fun provideRootStorage(@AppContext context: Context): File? =
+        context.getExternalFilesDir(null)
 }

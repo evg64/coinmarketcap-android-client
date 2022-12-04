@@ -1,12 +1,10 @@
 package com.eugene.cmcclient.ui.main
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import com.eugene.cmcclient.R
 import com.eugene.cmcclient.ui.common.mvp.BaseMvpActivity
 import com.eugene.cmcclient.ui.main.fragment_ticker_list.FragmentTickerList
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class ActivityMain : BaseMvpActivity(), MvpActivityMain.View {
@@ -28,10 +26,13 @@ class ActivityMain : BaseMvpActivity(), MvpActivityMain.View {
         presenter.attach(this)
 
         setContentView(R.layout.activity_main)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         if (supportFragmentManager.findFragmentByTag(TAG_MAIN_FRAGMENT) == null) {
-            supportFragmentManager.beginTransaction().add(R.id.fragment, FragmentTickerList(), TAG_MAIN_FRAGMENT).commit()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment, FragmentTickerList(), TAG_MAIN_FRAGMENT)
+                .commit()
         }
     }
 

@@ -10,7 +10,10 @@ import dagger.Component
 /**
  * Created by Eugene on 13.12.2017.
  */
-@Component(modules = [ModuleFragment::class], dependencies = [ComponentApp::class])
+@Component(
+    modules = [ModuleFragment::class],
+    dependencies = [ComponentApp::class],
+)
 @ScopeFragment
 interface ComponentFragment : CacheableComponent {
 

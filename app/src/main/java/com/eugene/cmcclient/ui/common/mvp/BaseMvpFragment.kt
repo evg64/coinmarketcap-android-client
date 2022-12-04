@@ -2,7 +2,7 @@ package com.eugene.cmcclient.ui.common.mvp
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.eugene.cmcclient.di.Injector
 import com.eugene.cmcclient.di.component_cache.ComponentCache
 import com.eugene.cmcclient.di.components.ComponentFragment
